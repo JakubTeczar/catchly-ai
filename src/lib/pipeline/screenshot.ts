@@ -161,5 +161,5 @@ const playWithBrowser = JSON.stringify([
   await writeFile(filepath, Buffer.from(b64, "base64"));
   console.log("[screenshot] Zapisano plik:", filepath);
 
-  return `/screenshots/${filename}`;
+  return `/api/screenshots/${filename}`;
 }
