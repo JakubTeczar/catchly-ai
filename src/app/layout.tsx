@@ -9,9 +9,12 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Twój Agent AI — Zwiększ konwersję na stronie",
+  title: "Twój Agent AI który zwiększa konwersje",
   description:
     "Agent AI który pracuje 24/7 i automatycznie zwiększa konwersję na Twojej stronie internetowej. Testuj, ucz się, zarabiaj.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
