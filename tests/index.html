@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Tester Skryptu Cookies</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f9; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        textarea { width: 100%; height: 100px; margin-bottom: 10px; font-family: monospace; }
+        #sandbox { border: 2px dashed #ccc; padding: 20px; margin: 20px 0; text-align: center; min-height: 50px; }
+        #logs { background: #333; color: #0f0; padding: 15px; border-radius: 4px; font-family: monospace; height: 150px; overflow-y: auto; }
+        button.test-btn { background: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
+        .status-ok { color: #0f0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🛠 Tester Regexa i Skryptu Klikającego</h2>
+    
+    <p>1. Wklej kod HTML przycisku poniżej:</p>
+    <textarea id="htmlInput" placeholder='np. <button>Akceptuj pliki cookie</button>'><button class="amgdprcookie-button -allow -save" data-amgdprcookie-js="accept">
+    Akceptuj pliki cookie
+</button></textarea>
+    
+    <button class="test-btn" onclick="generateButton()">Wstaw przycisk i uruchom skrypt</button>
+
+    <p>2. Tu pojawi się wygenerowany przycisk (Piaskownica):</p>
+    <div id="sandbox"></div>
+
+    <p>3. Konsola skryptu (Logi):</p>
+    <div id="logs">Czekam na akcję...<br></div>
+</div>
+
+<script>
+    function log(msg) {
+        const logs = document.getElementById('logs');
+        logs.innerHTML += `> ${msg}<br>`;
+        logs.scrollTop = logs.scrollHeight;
+    }
+
+    function generateButton() {
+        const input = document.getElementById('htmlInput').value;
+        const sandbox = document.getElementById('sandbox');
+        
+        // Czyścimy piaskownicę
+        sandbox.innerHTML = input;
+        log("Wstawiono przycisk do piaskownicy.");
+
+        // Dodajemy event listener, żeby wiedzieć czy faktycznie kliknięto
+        const btn = sandbox.querySelector('button, a, [role="button"]');
+        if (btn) {
+            btn.onclick = () => {
+                log("<span class='status-ok'>SUKCES: Przycisk został KLIKNIĘTY przez skrypt!</span>");
+            };
+            
+            // Uruchamiamy Twój skrypt (symulacja Execute)
+            runYourScript();
+        } else {
+            log("BŁĄD: Nie znaleziono przycisku w wklejonym kodzie.");
+        }
+    }
+
+    // TWOJE LOGIKA SKRYPTU
+    function runYourScript() {
+        log("Uruchamiam skrypt wykrywający...");
+        
+        // Globalne wyłączenie animacji (dodajemy do head)
+        const sAnim = document.createElement('style');
+        sAnim.textContent = '* { transition: none !important; animation: none !important; }';
+        document.head.appendChild(sAnim);
+
+        // POPRAWIONY REGEX (dodałem 'akceptuj' i 'zaakceptuj' jako luźne słowa)
+        const r = /allow all|allow cookies|accept all|accept cookies|i agree|i accept|got.?it|akceptuj|zaakceptuj|zezwól|zezwalaj|zgadzam si[eę]|potwierdzam|rozumiem/i;
+
+        const btns = Array.from(document.querySelectorAll('#sandbox button, #sandbox a, #sandbox [role="button"]'));
+        
+        btns.forEach(b => {
+            const text = (b.innerText || b.textContent || '').trim().replace(/\s+/g, ' ');
+            log(`Analizuję tekst: "${text}"`);
+            
+            if (r.test(text)) {
+                log(`Znalazłem dopasowanie! Próbuję kliknąć...`);
+                b.click();
+            } else {
+                log(`Brak dopasowania dla: "${text}"`);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

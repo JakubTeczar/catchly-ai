@@ -1,0 +1,209 @@
+// ─── FeaturesSection ──────────────────────────────────────────────────────────
+
+.fs-section {
+  position: relative;
+  z-index: 10;
+  padding: 80px 0 100px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+  &--compact {
+    padding: 0;
+    border-top: none;
+  }
+}
+
+.fs-container {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 88px;
+
+  @media (max-width: 600px) {
+    gap: 60px;
+    padding: 0 16px;
+  }
+
+  .fs-section--compact & {
+    max-width: 100%;
+    padding: 0;
+  }
+}
+
+// ─── Section header ───────────────────────────────────────────────────────────
+
+.fs-header {
+  text-align: center;
+}
+
+.fs-title {
+  font-family: Brockmann, sans-serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+  color: #fff;
+  margin: 1rem 0 0.5rem;
+  line-height: 1.2;
+}
+
+.fs-subtitle {
+  font-family: Satoshi, sans-serif;
+  font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.38);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+// ─── Feature icon / title / desc shared ───────────────────────────────────────
+
+.fs-icon {
+  display: block;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+}
+
+.fs-feature-title {
+  font-family: Brockmann, sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  color: #fff;
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+
+.fs-feature-desc {
+  font-family: Satoshi, sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.75;
+  margin: 0;
+}
+
+// ─── Feature rows ─────────────────────────────────────────────────────────────
+
+.fs-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+
+  &--reverse {
+    .fs-copy  { order: 2; }
+    .fs-visual { order: 1; }
+  }
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    &--reverse {
+      .fs-copy  { order: 1; }
+      .fs-visual { order: 2; }
+    }
+  }
+}
+
+.fs-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.fs-visual-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 1.25rem;
+  width: 100%;
+
+  &--placeholder {
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.01);
+  }
+}
+
+.fs-placeholder-label {
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.04em;
+}
+
+// ─── Autonomy (Feature 4) ─────────────────────────────────────────────────────
+
+.fs-autonomy {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 2.25rem 2.5rem 2rem;
+
+  @media (max-width: 600px) {
+    padding: 1.5rem;
+  }
+}
+
+.fs-autonomy-header {
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.fs-autonomy-desc {
+  margin-top: 8px;
+}
+
+.fs-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 1.75rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fs-step {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+.fs-step-icon {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.fs-step-title {
+  font-family: Brockmann, sans-serif;
+  font-size: 0.95rem;
+  color: #fff;
+  margin: 0 0 6px;
+  font-weight: 600;
+}
+
+.fs-step-desc {
+  font-family: Satoshi, sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.42);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.fs-trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: Satoshi, sans-serif;
+  font-size: 0.77rem;
+  color: rgba(255, 255, 255, 0.28);
+
+  svg {
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.28);
+  }
+}

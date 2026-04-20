@@ -1,0 +1,183 @@
+// ─── Wrapper ──────────────────────────────────────────────────────────────────
+
+.limited-popup-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.preview-mode {
+    position: absolute;
+    inset: 0;
+  }
+
+  &.active.preview-mode {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+// ─── Overlay ──────────────────────────────────────────────────────────────────
+
+.lpm-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 0;
+}
+
+// ─── Content card ─────────────────────────────────────────────────────────────
+
+.limited-popup-mobile .limited-popup-content {
+  position: relative;
+  display: block;
+  z-index: 1;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem 1.25rem 1.75rem;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.18);
+  transform: none !important;
+  transition: none !important;
+}
+
+// ─── Brand & Title ────────────────────────────────────────────────────────────
+
+.limited-popup-mobile .limited-brand {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.4rem;
+}
+
+.limited-popup-mobile .limited-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+// ─── Product ──────────────────────────────────────────────────────────────────
+
+.limited-popup-mobile .limited-product {
+  margin: 1rem 0;
+
+  .product-image {
+    max-width: 110px;
+    height: auto;
+    margin: 0 auto 0.6rem;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .product-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2933;
+    margin: 0 0 0.4rem;
+  }
+}
+
+// ─── Pricing ──────────────────────────────────────────────────────────────────
+
+.limited-popup-mobile .limited-pricing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+
+  .price-old {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+    font-weight: 500;
+  }
+
+  .price-new {
+    font-size: 1.25rem;
+    color: #059669;
+    font-weight: 700;
+  }
+}
+
+// ─── Countdown ────────────────────────────────────────────────────────────────
+
+.limited-popup-mobile .limited-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.limited-popup-mobile .time-box {
+  min-width: 52px;
+}
+
+.limited-popup-mobile .time-value {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #111827;
+  margin-bottom: 0.2rem;
+}
+
+.limited-popup-mobile .time-label {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: #6b7280;
+}
+
+// ─── Actions ──────────────────────────────────────────────────────────────────
+
+.limited-popup-mobile .limited-actions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.limited-popup-mobile .limited-cta {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &.cta-no {
+    background-color: #f1f5f9;
+    color: #4b5563;
+
+    &:hover { background-color: #e2e8f0; }
+  }
+
+  &.cta-yes {
+    background-color: #111827;
+    color: #ffffff;
+
+    &:hover { background-color: #020617; }
+  }
+}

@@ -1,0 +1,208 @@
+/* Zmienione na pełnoekranowy overlay (tło) */
+.limited-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* Czarny półprzezroczysty overlay */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+
+    .limited-popup-content {
+      transform: scale(1); /* Efekt wjazdu pop-upa po pokazaniu tła */
+    }
+  }
+}
+
+.limited-popup-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem 2.5rem 2.25rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.18);
+  max-width: 420px;
+  width: 90%; /* Zabezpieczenie na mobile */
+  text-align: center;
+  position: relative;
+  transform: scale(0.95); /* Startowa skala do animacji */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.limited-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 9999px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #1f2933;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: #f1f5f9;
+  }
+}
+
+.limited-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+/* NOWE: Sekcja produktu */
+.limited-product {
+  margin: 1.5rem 0;
+  
+  .product-image {
+    max-width: 140px; /* Dostosuj wielkość zdjęcia */
+    height: auto;
+    margin: 0 auto 0.75rem;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .product-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2933;
+    margin: 0;
+  }
+}
+
+.limited-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.time-box {
+  min-width: 72px;
+}
+
+.time-value {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.time-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: #6b7280;
+}
+
+/* NOWE: Układ przycisków */
+.limited-actions {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.limited-cta {
+  flex: 1; /* Przyciski podzielą się miejscem 50/50 */
+  padding: 0.9rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* Przycisk NIE */
+  &.cta-no {
+    background-color: #f1f5f9;
+    color: #4b5563;
+    
+    &:hover {
+      background-color: #e2e8f0;
+      transform: translateY(-1px);
+    }
+  }
+
+  /* Przycisk TAK */
+  &.cta-yes {
+    background-color: #111827;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #020617;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.4);
+    }
+  }
+}
+
+/* Zaktualizowana sekcja produktu z cenami */
+.limited-product {
+  margin: 1.5rem 0;
+  
+  .product-image {
+    max-width: 140px; 
+    height: auto;
+    margin: 0 auto 0.75rem;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .product-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2933;
+    margin: 0 0 0.5rem 0; /* Zmieniony margines dolny */
+  }
+}
+
+/* NOWE: Sekcja cenowa */
+.limited-pricing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+
+  .price-old {
+    font-size: 1rem;
+    color: #9ca3af; /* Jasnoszary */
+    text-decoration: line-through; /* Przekreślenie */
+    font-weight: 500;
+  }
+
+.price-new {
+    font-size: 1.4rem;
+    color: #059669; /* Szmaragdowa, elegancka zieleń */
+    font-weight: 700;
+  }
+}

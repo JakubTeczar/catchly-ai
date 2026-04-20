@@ -1,0 +1,193 @@
+// ─── SalesPopupMobile ─────────────────────────────────────────────────────────
+
+.sales-popup-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &.preview-mode {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &.active.preview-mode {
+    transform: translateY(0);
+  }
+}
+
+// ─── Card ─────────────────────────────────────────────────────────────────────
+
+.spm-card {
+  background: #ffffff;
+  border-radius: 12px 12px 0 0;
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.18), 0 -2px 8px rgba(0, 0, 0, 0.08);
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+
+.spm-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.spm-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.spm-brand {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 3px;
+}
+
+.spm-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f0f0f;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.spm-close {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #272725;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin-top: 2px;
+}
+
+// ─── Products ─────────────────────────────────────────────────────────────────
+
+.spm-products {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.spm-product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.spm-product-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #d9d9d9;
+}
+
+.spm-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.spm-product-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spm-product-emoji {
+  font-size: 1.75rem;
+}
+
+.spm-product-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.spm-product-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #111111;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.spm-product-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.spm-product-pricing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.spm-price-old {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.spm-price-new {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #111111;
+}
+
+.spm-product-btn {
+  flex-shrink: 0;
+  padding: 0 12px;
+  height: 28px;
+  background: #272725;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+
+  &:hover {
+    background: #111111;
+  }
+}

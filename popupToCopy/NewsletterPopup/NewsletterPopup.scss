@@ -1,0 +1,253 @@
+.newsletter-popup {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .newsletter-popup {
+    right: 1rem;
+    top: 1rem;
+    left: 1rem;
+  }
+}
+
+.newsletter-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+}
+
+.newsletter-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.newsletter-header {
+  margin-bottom: 2rem;
+  padding-right: 3rem;
+}
+
+.newsletter-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.newsletter-subtitle {
+  font-size: 0.9375rem;
+  color: #64748b;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.bestseller-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.bestseller-item {
+  display: flex;
+  gap: 1rem;
+}
+
+.bestseller-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.bestseller-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.bestseller-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.bestseller-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bestseller-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.bestseller-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.bestseller-price {
+  font-size: 0.9375rem;
+  text-wrap: nowrap;
+  font-weight: 600;
+  color: #2a2a2b;
+  font-size: 15px;
+  text-align: center;
+  span{
+    display: inline-block;
+    text-decoration: line-through;
+    margin-top: px;
+  }
+  div{
+    // margin-bottom: 15px;
+    color: rgb(5, 175, 5);
+  }
+}
+
+.bestseller-cta {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: none;
+  background-color: #1e293b;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background-color: #0c1119;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.newsletter-input {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-family: "Inter", sans-serif;
+  transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &::placeholder {
+    color: #64748b;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #bbea00;
+    box-shadow: 0 0 0 3px rgba(187, 234, 0, 0.1);
+  }
+}
+
+.newsletter-submit {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background-color: #1e293b;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background-color: #0c1119;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.newsletter-note {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+
+

@@ -1,0 +1,607 @@
+// ─── Audit Summary ────────────────────────────────────────────────────────────
+
+.audit-summary {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.audit-arrow {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 1.25rem;
+  padding-top: 2rem;
+
+  @media (max-width: 700px) {
+    display: none;
+  }
+}
+
+.audit-col {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.audit-col-label {
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.audit-col-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.audit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.audit-item-dot {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-top: 5px;
+
+  &--green {
+    background: #22c55e;
+  }
+
+  &--yellow {
+    background: #BBEA00;
+  }
+}
+
+.audit-item-text {
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+  display: block;
+}
+
+.audit-item-desc {
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.74rem;
+  color: rgba(255, 255, 255, 0.3);
+  line-height: 1.45;
+  display: block;
+  margin-top: 0.15rem;
+}
+
+// ─── Preview Frame ────────────────────────────────────────────────────────────
+
+.popup-preview-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f0f2f5;
+
+  // Desktop: 16:9 browser-like frame
+  aspect-ratio: 16 / 9;
+  width: 100%;
+
+  // Mobile screen: phone-like portrait frame
+  @media (max-width: 800px) {
+    aspect-ratio: 9 / 18;
+    max-width: 320px;
+    margin: 0 auto;
+    border-radius: 24px;
+    border: 6px solid #1e293b;
+    box-shadow: 0 0 0 2px #0f172a, 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+// ─── Browser chrome (desktop only) ───────────────────────────────────────────
+
+.popup-preview-browser {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #e2e8f0;
+  border-bottom: 1px solid #cbd5e1;
+
+  @media (max-width: 800px) {
+    display: none;
+  }
+}
+
+.popup-preview-dots {
+  display: flex;
+  gap: 5px;
+
+  span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    &:nth-child(1) { background: #fc615d; }
+    &:nth-child(2) { background: #fdbc40; }
+    &:nth-child(3) { background: #34c84a; }
+  }
+}
+
+.popup-preview-addressbar {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  color: #64748b;
+  font-family: "Satoshi", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ─── Screenshot background ───────────────────────────────────────────────────
+
+.popup-preview-screenshot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+
+  // Shift down past browser chrome on desktop
+  top: 33px;
+  height: calc(100% - 33px);
+
+  @media (max-width: 800px) {
+    top: 0;
+    height: 100%;
+  }
+}
+
+// ─── Mock website content (fallback) ─────────────────────────────────────────
+
+.popup-preview-website {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+
+  // Shift down past browser chrome on desktop
+  top: 33px;
+
+  @media (max-width: 800px) {
+    top: 0;
+  }
+}
+
+.popup-preview-nav {
+  height: 10%;
+  background: #1e293b;
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  gap: 3%;
+  flex-shrink: 0;
+
+  .nav-logo {
+    width: 12%;
+    height: 40%;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2%;
+    flex: 1;
+
+    span {
+      width: 7%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+  }
+
+  .nav-cta {
+    width: 10%;
+    height: 45%;
+    background: rgba(187, 234, 0, 0.7);
+    border-radius: 4px;
+  }
+}
+
+.popup-preview-hero {
+  height: 35%;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  gap: 4%;
+
+  .hero-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .line { background: #cbd5e1; border-radius: 3px; }
+    .line-1 { height: 14px; width: 70%; }
+    .line-2 { height: 10px; width: 55%; }
+    .line-3 { height: 8px; width: 40%; margin-top: 6px; }
+
+    .hero-btn {
+      margin-top: 10px;
+      height: 28px;
+      width: 30%;
+      background: #1e293b;
+      border-radius: 5px;
+    }
+  }
+
+  .hero-image {
+    width: 35%;
+    height: 80%;
+    background: #cbd5e1;
+    border-radius: 8px;
+  }
+}
+
+.popup-preview-content {
+  padding: 3% 5%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3%;
+
+  .content-card {
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+    .card-img {
+      height: 60px;
+      background: #e2e8f0;
+    }
+
+    .card-body {
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .card-line {
+        height: 6px;
+        background: #e2e8f0;
+        border-radius: 2px;
+
+        &.short { width: 60%; }
+      }
+    }
+  }
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 4%;
+  }
+}
+
+// ─── View mode toggle (Na stronie / Sam popup) ────────────────────────────────
+
+.popup-view-toggle {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.2rem;
+}
+
+.popup-view-toggle-btn {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: "Satoshi", sans-serif;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.35);
+
+  &.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  &:not(.active):hover {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+// ─── Standalone popup view (Sam popup) ───────────────────────────────────────
+
+.popup-standalone-view {
+  background: #f0f2f5;
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+
+  // Override previewMode positioning — render in normal flow, full size
+  .sales-popup,
+  .sales-popup-mobile,
+  .newsletter-popup,
+  .newsletter-popup-mobile,
+  .limited-popup {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    top: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    background: transparent !important;
+  }
+
+  // Center popup cards within their full-width wrappers
+  .sp-card,
+  .newsletter-content,
+  .limited-popup-content {
+    margin: 0 auto;
+  }
+
+  // LimitedOfferPopup desktop content scale
+  .limited-popup .limited-popup-content {
+    transform: none !important;
+    width: 100% !important;
+    max-width: 420px !important;
+  }
+
+  // LimitedOfferPopupMobile — keep flex centering intact, only fix positioning
+  .limited-popup-mobile {
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    width: 100% !important;
+    min-height: 420px;
+  }
+
+  .limited-popup-mobile .lpm-overlay {
+    border-radius: 10px;
+  }
+}
+
+// ─── Save audit (email capture) ───────────────────────────────────────────────
+
+.audit-save-section {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.audit-save-title {
+  font-family: "Brockmann", sans-serif;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 0.2rem;
+  line-height: 1.35;
+}
+
+.audit-save-sub {
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0;
+}
+
+.audit-save-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.audit-save-input {
+  flex: 1;
+  min-width: 180px;
+  height: 40px;
+  padding: 0 0.875rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: "Satoshi", sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  &:focus {
+    border-color: rgba(187, 234, 0, 0.45);
+  }
+}
+
+.audit-save-btn {
+  height: 40px;
+  padding: 0 1.25rem;
+  background: #bbea00;
+  color: #080808;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: "Satoshi", sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    opacity: 0.88;
+  }
+}
+
+.audit-save-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+  line-height: 1.5;
+
+  input[type="checkbox"] {
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: #bbea00;
+    cursor: pointer;
+  }
+}
+
+.audit-save-link {
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: underline;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.audit-save-success {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.audit-save-success-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.audit-save-success-title {
+  font-family: "Brockmann", sans-serif;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 0.2rem;
+}
+
+.audit-save-success-sub {
+  font-family: "Satoshi", sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0;
+}
+
+// ─── Sidebar description HTML styles ─────────────────────────────────────────
+
+.popup-sidebar-description {
+  // Intro paragraph
+  .desc-intro {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  // Options grid
+  .desc-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+
+    @media (max-width: 700px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Single option card
+  .desc-option {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  // Top row: badge + title
+  .desc-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .desc-badge {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: #bbea00;
+    color: #080808;
+    font-size: 0.7rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .desc-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+  }
+
+  // "Dlaczego działa" block
+  .desc-why {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.55;
+    padding-left: 0.25rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.08);
+  }
+
+  // Stat / social proof line
+  .desc-stat {
+    font-size: 0.75rem;
+    color: #bbea00;
+    font-weight: 500;
+    margin-top: auto;
+    padding-top: 0.25rem;
+  }
+}
