@@ -34,6 +34,7 @@ export async function scrapeUrl(url: string, useSuper: boolean = false, render: 
   const params = new URLSearchParams({
     token: SCRAPE_API_KEY,
     url,
+    geoCode: "PL",
     render: render ? "true" : "false",
     super: useSuper ? "true" : "false",
   });

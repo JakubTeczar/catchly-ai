@@ -121,6 +121,7 @@ const playWithBrowser = JSON.stringify([
     height: "1080",
     returnJSON: "true",
     screenShot: "true",
+    geoCode: "PL",
     playWithBrowser,
   });
 

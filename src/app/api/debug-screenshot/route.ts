@@ -41,6 +41,7 @@ export async function GET(req: NextRequest) {
     height: "1080",
     returnJSON: "true",
     screenShot: "true",
+    geoCode: "PL",
   });
 
   const apiUrl = `http://api.scrape.do/?${params.toString()}`;
