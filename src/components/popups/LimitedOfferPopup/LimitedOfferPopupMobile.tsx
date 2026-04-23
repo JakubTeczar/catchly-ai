@@ -38,6 +38,10 @@ export function LimitedOfferPopupMobile({ visible, previewMode = false, onClose,
 
   const isVisible = visible && !dismissed;
 
+  // Logika sprawdzania czy wyświetlamy produkty czy usługi
+  const hasProduct = Boolean(config.productImage || config.productName || config.newPrice);
+  const hasServices = Boolean(config.services && config.services.length > 0);
+
   function handleNo() {
     setDismissed(true);
     onClose();
@@ -45,7 +49,7 @@ export function LimitedOfferPopupMobile({ visible, previewMode = false, onClose,
   }
 
   function handleYes() {
-    showToast("Świetnie! Przekierujemy Cię do produktu");
+    showToast("Świetnie! Przekierujemy Cię dalej");
     setDismissed(true);
     reappearTimer.current = setTimeout(() => setDismissed(false), 3000);
   }
@@ -72,7 +76,8 @@ export function LimitedOfferPopupMobile({ visible, previewMode = false, onClose,
 
         <h2 className="limited-title">{config.titleLine1}</h2>
 
-        {(config.productImage || config.productName || config.newPrice) && (
+        {/* --- SEKCJA PRODUKTU (E-COMMERCE) --- */}
+        {hasProduct && (
           <div className="limited-product">
             {config.productImage && (
               <img src={config.productImage} alt={config.productName || "Produkt"} className="product-image" />
@@ -87,6 +92,28 @@ export function LimitedOfferPopupMobile({ visible, previewMode = false, onClose,
           </div>
         )}
 
+        {/* --- SEKCJA USŁUG (USŁUGOWE) --- */}
+        {!hasProduct && hasServices && (
+          <div className="limited-services-mobile">
+            {config.services!.map((service, idx) => (
+              <div key={idx} className="lsm-item">
+                <div className="lsm-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div className="lsm-info">
+                  <h4 className="lsm-title">{service.title}</h4>
+                  {service.shortDescription && (
+                    <p className="lsm-desc">{service.shortDescription}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* --- LICZNIK CZASU --- */}
         <div className="limited-countdown">
           <div className="time-box">
             <span className="time-value">{String(hours).padStart(2, "0")}</span>
@@ -104,7 +131,9 @@ export function LimitedOfferPopupMobile({ visible, previewMode = false, onClose,
 
         <div className="limited-actions">
           <button type="button" className="limited-cta cta-no" onClick={handleNo}>Nie</button>
-          <button type="button" className="limited-cta cta-yes" onClick={handleYes}>Tak</button>
+          <button type="button" className="limited-cta cta-yes" onClick={handleYes}>
+            {config.ctaLabel || "Tak"}
+          </button>
         </div>
       </div>
     </div>

@@ -46,7 +46,11 @@ export function UrlInputForm() {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: url.trim() }),
+        body: JSON.stringify({ 
+          url: url.trim(),
+          width: window.innerWidth,
+          height: window.innerHeight 
+        }),
       });
       const data = await res.json();
       if (!res.ok) {

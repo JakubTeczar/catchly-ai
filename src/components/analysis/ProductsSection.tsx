@@ -109,6 +109,15 @@ export function ProductsSection({ productsData, done }: Props) {
   const isProduct = productsData?.businessType === "product";
   const products = productsData?.products ?? [];
 
+  let sectionTitle = "";
+  if (!done) {
+    sectionTitle = "Skanowanie oferty, to może zająć chwilę...";
+  } else if (products.length === 0) {
+    sectionTitle = "Skanowanie oferty zakończone";
+  } else {
+    sectionTitle = isProduct ? "Wykryte produkty" : "Propozycje oferty";
+  }
+
   return (
     <div
       className="rounded-2xl relative overflow-hidden"
@@ -125,7 +134,7 @@ export function ProductsSection({ productsData, done }: Props) {
             className="text-base font-medium text-white"
             style={{ fontFamily: "Brockmann, sans-serif" }}
           >
-            {isProduct ? "Wykryte produkty" : "Propozycje oferty do popupa"}
+            {sectionTitle}
           </h2>
           {done && products.length > 0 && (
             <span

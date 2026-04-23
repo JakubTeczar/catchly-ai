@@ -107,11 +107,12 @@
 .bestseller-item {
   display: flex;
   gap: 1rem;
+  height: 100%;
 }
 
 .bestseller-image {
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: auto;
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
@@ -128,6 +129,73 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+    
+    /* Mały efekt podświetlenia numeru przy najechaniu na wiersz */
+    .service-number {
+      background-color: #1e293b;
+      color: #ffffff;
+    }
+  }
+}
+
+/* Nowy styl dla kółka z numerem */
+.service-number {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e2e8f0;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-top: 2px; /* Lekkie przesunięcie w dół, aby zrównać z pierwszą linią tekstu */
+  transition: all 0.3s ease;
+}
+
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.service-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.service-description {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0;
 }
 
 .bestseller-info {
@@ -140,7 +208,7 @@
 .bestseller-main {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  // align-items: center;
   margin-bottom: 0.5rem;
 }
 
@@ -156,13 +224,17 @@
   color: #2a2a2b;
   text-align: center;
   text-wrap: nowrap;
+  display: grid;
 
   span {
     display: inline-block;
     text-decoration: line-through;
+    font-size: 14px;
   }
 
   span:last-child {
+    text-decoration: none;
+    font-size: 16px;
     color: rgb(5, 175, 5);
   }
 }
@@ -170,9 +242,9 @@
 .bestseller-cta {
   align-self: flex-start;
   padding: 0.5rem 1rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 10px;
   border: none;
   background-color: #1e293b;
   color: #ffffff;

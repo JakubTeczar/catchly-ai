@@ -19,7 +19,12 @@ import { createLogger } from "./logger";
 const ANALYSIS_LEVEL: 1 | 2 | 3 | 4 | 5 = 4;
 // ─────────────────────────────────────────────────────────────────────────────
 
-export async function runAnalysisPipeline(id: string, url: string) {
+export async function runAnalysisPipeline(
+  id: string, 
+  url: string, 
+  screenWidth?: number, 
+  screenHeight?: number
+) {
   const { log, logFile } = createLogger(id);
   log(`[pipeline] START | level: ${ANALYSIS_LEVEL} | url: ${url}`);
 
@@ -54,7 +59,7 @@ export async function runAnalysisPipeline(id: string, url: string) {
     // ── Step 1: Screenshot ────────────────────────────────────────────────────
     let screenshotUrl: string | undefined;
     try {
-      screenshotUrl = await takeScreenshot(id, url);
+      screenshotUrl = await takeScreenshot(id, url, screenWidth, screenHeight);
       await prisma.analysis.update({
         where: { id },
         data: { screenshotUrl, screenshotDone: true },
@@ -149,7 +154,7 @@ export async function runAnalysisPipeline(id: string, url: string) {
     });
 
     // ── Step 6: Popup generation ───────────────────────────────────────────────
-    const popupData = await generatePopupData(productsData, url, log);
+    const popupData = await generatePopupData(productsData, url, subpagesData, log);
     await prisma.analysis.update({
       where: { id },
       data: {

@@ -11,7 +11,7 @@ interface Props {
   url: string;
 }
 
-const PROGRESS_DURATION = 14000; // 10s
+const PROGRESS_DURATION = 24000; // 10s
 
 export function ScreenshotSection({ screenshotUrl, done, allDone, url }: Props) {
   const [progress, setProgress] = useState(0);
@@ -108,6 +108,10 @@ export function ScreenshotSection({ screenshotUrl, done, allDone, url }: Props) 
               ))}
             </div>
 
+              {/* WYŚRODKOWANY TEKST */}
+            <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#BBEA00] text-2xl font-medium text-center whitespace-nowrap">
+              {Math.round(progress)}%
+            </span>
             {/* Progress bar overlay */}
             {showProgress && (
               <div style={{
@@ -123,9 +127,9 @@ export function ScreenshotSection({ screenshotUrl, done, allDone, url }: Props) 
                   <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", fontFamily: "Satoshi, sans-serif" }}>
                     Skanowanie ekranu...
                   </span>
-                  <span style={{ fontSize: "0.7rem", color: "#BBEA00", fontFamily: "Satoshi, sans-serif", fontWeight: 600 }}>
+                  {/* <span style={{ fontSize: "0.7rem", color: "#BBEA00", fontFamily: "Satoshi, sans-serif", fontWeight: 600 }}>
                     {Math.round(progress)}%
-                  </span>
+                  </span> */}
                 </div>
                 <div style={{ height: "3px", background: "rgba(255,255,255,0.08)", borderRadius: "2px", overflow: "hidden" }}>
                   <div style={{

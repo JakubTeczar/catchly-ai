@@ -238,8 +238,8 @@ export function OfferSection({ analysisId }: Props) {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "Satoshi, sans-serif", fontSize: "0.77rem", color: "rgba(255,255,255,0.28)" }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "Satoshi, sans-serif", fontSize: "0.8rem", marginTop: "20px", color: "rgba(255,255,255,0.68)" }}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
           <span>Twoje dane i ustawienia nigdy nie są zmieniane bez Twojej zgody</span>

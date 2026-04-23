@@ -1,34 +1,25 @@
-// ─── Mobile Newsletter Popup ──────────────────────────────────────────────────
-// Styl powiadomienia — wysuwa się z prawej, 90% szerokości, 1 produkt
+// ─── Mobile Newsletter Popup (Slider Version) ────────────────────────────────
 
 .newsletter-popup-mobile {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-100%);
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 90%;
+  max-width: 340px; // Zbliżone do wymiaru ze zdjęcia (309px)
+  transition: all 0.3s ease;
 
   &.active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
   }
 
   &.preview-mode {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  &.active.preview-mode {
-    transform: translateY(0);
+    height: 560px;
   }
 }
 
@@ -36,40 +27,17 @@
 
 .nlm-card {
   background: #ffffff;
-  border-radius: 0 0 16px 16px;
-  padding: 0.9rem 1rem 1.1rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  border-radius: 16px;
+  gap: 0rem;
+  position: relative;
+  height: 100%;
 }
 
-// ─── Top row ──────────────────────────────────────────────────────────────────
-
-.nlm-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-
-.nlm-top-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.nlm-title {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #1e293b;
-  line-height: 1.3;
-}
-
-.nlm-subtitle {
-  font-size: 0.72rem;
-  color: #64748b;
-  line-height: 1.3;
-  margin-top: 0.1rem;
-}
+// ─── Header & Close ───────────────────────────────────────────────────────────
 
 .nlm-close {
   flex-shrink: 0;
@@ -83,169 +51,262 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  margin-left: auto;
+  z-index: 10;
+}
 
-  &:hover {
-    background: #e2e8f0;
-    color: #475569;
+.nlm-header {
+  text-align: center;
+  
+  .nlm-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #001233; // Ciemny granat
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .nlm-subtitle {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-top: 4px;
   }
 }
 
-// ─── Product row ──────────────────────────────────────────────────────────────
+// ─── Slider Container ────────────────────────────────────────────────────────
 
-.nlm-product {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.nlm-slider-container {
+  position: relative;
+  margin: 10px 0;
+  padding: 0 35px; // Miejsce na strzałki po bokach
+  padding-bottom: 0;
+  margin-bottom: 0;
+
 }
 
-.nlm-product-image {
-  width: 70px;
-  height: 70px;
-  border-radius: 12px;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: #d9d9d9;
-}
+// ─── Product Slide (Vertical Layout) ─────────────────────────────────────────
 
-.nlm-product-img,
-.nlm-product-placeholder {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.nlm-product-body {
-  flex: 1;
-  min-width: 0;
+.nlm-product-slide {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-
-.nlm-product-name {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #111111;
-  margin: 0;
-  line-height: 1.35;
-}
-
-.nlm-product-footer {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  text-align: center;
+
+  .nlm-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #e2e8f0; // Szary placeholder ze zdjęcia
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
+    
+    .nlm-placeholder {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .nlm-product-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #001233;
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .nlm-pricing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .nlm-old-price {
+      font-size: 14px;
+      color: #94a3b8;
+      text-decoration: line-through;
+    }
+
+    .nlm-new-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981; // Zielony ze zdjęcia
+    }
+  }
 }
 
-.nlm-product-pricing {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
+// ─── Navigation Buttons ──────────────────────────────────────────────────────
 
-.nlm-price-old {
-  font-size: 0.72rem;
-  color: #94a3b8;
-  text-decoration: line-through;
-}
-
-.nlm-price-new {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #111111;
-}
-
-.nlm-product-btn {
-  flex-shrink: 0;
-  padding: 0 12px;
-  height: 28px;
-  background: #272725;
-  color: #fff;
+.nlm-nav-btn {
+  position: absolute;
+  top: 35%; // Wycentrowane względem zdjęcia produktu
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background: #001233;
   border: none;
-  border-radius: 8px;
-  font-size: 0.68rem;
-  font-weight: 600;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s;
+  z-index: 20;
+  transition: opacity 0.2s;
 
-  &:hover {
-    background: #111111;
+  svg {
+    stroke: #ffffff;
+  }
+
+  &.nlm-prev { left: -5px; }
+  &.nlm-next { right: -5px; }
+
+  &:active {
+    transform: translateY(-50%) scale(0.9);
+  }
+
+  &.swiper-button-disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
   }
 }
 
-// ─── Divider ──────────────────────────────────────────────────────────────────
+// ─── Footer & Form ───────────────────────────────────────────────────────────
 
-.nlm-divider {
-  height: 1px;
-  background: #e2e8f0;
-}
-
-// ─── Form ─────────────────────────────────────────────────────────────────────
-
-.nlm-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.nlm-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 0.4rem;
 }
 
 .nlm-form-note {
-  font-size: 0.78rem;
-  color: #475569;
-  line-height: 1.4;
-}
-
-.nlm-form-row {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.nlm-input {
-  flex: 1;
-  padding: 0.55rem 0.75rem;
-  font-size: 0.82rem;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 8px;
-  background: #fff;
+  font-size: 12px;
   color: #1e293b;
-  transition: border-color 0.15s;
-  min-width: 0;
+  text-align: center;
+  margin-bottom: 0.2rem;
+  line-height: 1.4;
 
-  &::placeholder {
-    color: #94a3b8;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #bbea00;
+  strong {
+    font-weight: 700;
   }
 }
 
-.nlm-submit {
-  flex-shrink: 0;
-  padding: 0.55rem 0.9rem;
-  background: #1e293b;
-  color: #fff;
-  border: none;
+.nlm-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s;
+  padding: 4px;
+  background: #fff;
+  margin-top: 10PX;
 
-  &:hover {
-    background: #0c1119;
+  .nlm-input {
+    flex: 1;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+
+  .nlm-submit {
+    background: #001233;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-wrap: nowrap;
+    cursor: pointer;
   }
 }
 
-// ─── Note ─────────────────────────────────────────────────────────────────────
+// Swiper Pagination Dots
+.swiper-pagination-bullet {
+  background: #cbd5e1;
+  opacity: 1;
+  &-active {
+    background: #001233;
+  }
+}
 
-.nlm-note {
-  font-size: 0.7rem;
-  color: #94a3b8;
+
+/* --- STYLE DLA SLIDERA USŁUG (MOBILE) --- */
+.nlm-service-slider-container {
+  /* Możesz tu dodać ewentualne marginesy, jeśli slider usług potrzebuje więcej miejsca */
+  margin-bottom: 1.5rem;
+}
+
+.nlm-service-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1rem 0.75rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  height: 100%;
+  min-height: 180px;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.nlm-service-number-large {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e293b;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.nlm-service-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 0.5rem 0;
+}
+
+.nlm-service-description {
+  font-size: 0.875rem;
+  color: #64748b;
   line-height: 1.5;
-  margin-top: -0.25rem;
+  margin: 0;
+}
+
+/* Upewnij się, że strzałki dla slidera usług są tak samo pozycjonowane jak dla produktów */
+.nlm-service-prev,
+.nlm-service-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  /* Reszta stylów dziedziczona z klasy .nlm-nav-btn, którą już masz w pliku */
+}
+
+.nlm-service-prev {
+  left: -10px;
+}
+
+.nlm-service-next {
+  right: -10px;
 }

@@ -10,15 +10,17 @@ interface Props {
 }
 
 const typeLabels: Record<string, string> = {
-  consultation: "Konsultacja",
-  newsletter: "Newsletter",
-  demo: "Demo",
-  trial: "Trial",
-  ebook: "E-book",
-  webinar: "Webinar",
-  calculator: "Kalkulator",
-  chat: "Czat",
-  contact_form: "Formularz",
+  contact_form: "Formularz kontaktowy",
+  direct_contact: "Bezpośredni kontakt",
+  newsletter: "Zapis na newsletter",
+  chat: "Czat na stronie",
+  quote_request: "Zapytanie ofertowe",
+  callback: "Prośba o kontakt zwrotny",
+  booking: "Rezerwacja terminu",
+  application: "Formularz zgłoszeniowy",
+  download: "Pobranie materiałów",
+  event_signup: "Zapis na wydarzenie",
+  account: "Założenie konta",
   other: "Inne",
 };
 
@@ -57,7 +59,7 @@ function RealToolItem({ tool }: { tool: LeadTool }) {
             className="text-xs flex items-center gap-1 mt-1 transition-colors"
             style={{ color: "#92B2F2", fontFamily: "Satoshi, sans-serif" }}>
             <ExternalLink className="w-3 h-3" />
-            {tool.sourceUrl.replace(/^https?:\/\/[^/]+/, "").slice(0, 40) || "/"}
+            {tool.sourceUrl}
           </a>
         )}
       </div>
@@ -82,7 +84,7 @@ function SuggestionItem({ tool }: { tool: LeadTool }) {
             className="text-xs flex items-center gap-1 mt-1.5 transition-colors"
             style={{ color: "rgba(246,176,36,0.6)", fontFamily: "Satoshi, sans-serif" }}>
             <ExternalLink className="w-3 h-3" />
-            {tool.sourceUrl.replace(/^https?:\/\/[^/]+/, "").slice(0, 40) || "/"}
+            {tool.sourceUrl || "/"}
           </a>
         )}
       </div>

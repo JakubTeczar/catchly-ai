@@ -127,7 +127,7 @@ export default function BanditVisualization() {
                 borderTop: `2px solid ${variant.color}`,
               }}>
                 <div style={{ fontSize: "0.6rem", fontWeight: 700, color: variant.color, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.35rem" }}>
-                  Pop-up {variant.key}
+                  Reklama {variant.key}
                 </div>
                 <div style={{ height: "5px", background: "rgba(255,255,255,0.07)", borderRadius: "3px", marginBottom: "4px" }} />
                 <div style={{ height: "5px", background: "rgba(255,255,255,0.05)", borderRadius: "3px", width: "70%", marginBottom: "6px" }} />

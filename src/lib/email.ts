@@ -32,7 +32,7 @@ export async function sendLeadConfirmation(to: string, websiteUrl: string, analy
           <!-- Header -->
           <tr>
             <td style="background:#080808;padding:28px 40px">
-              <span style="color:#BBEA00;font-size:20px;font-weight:700;letter-spacing:-0.5px">Catchly</span>
+              <span style="color:#ffffff;font-size:20px;font-weight:700;letter-spacing:-0.5px">Catchly</span>
             </td>
           </tr>
 
@@ -45,7 +45,7 @@ export async function sendLeadConfirmation(to: string, websiteUrl: string, analy
               <table cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="background:#BBEA00;border-radius:8px">
-                    <a href="${analysisUrl}" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:700;color:#111;text-decoration:none">Zobacz swój audyt →</a>
+                    <a href="${analysisUrl}" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:300;color:#111;text-decoration:none">Zobacz swój audyt →</a>
                   </td>
                 </tr>
               </table>

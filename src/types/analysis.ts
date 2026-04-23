@@ -72,22 +72,33 @@ export interface PopupProduct {
   image?: string;
 }
 
+
+interface ServiceDescription {
+  title: string;
+  shortDescription: string;
+}
+
+
+export interface NewsletterPopupConfig { // (lub jakkolwiek dokładnie się nazywa)
+  title: string;
+  subtitle: string;
+  note: string;
+  products?: PopupProduct[];
+  services?: ServiceDescription[]; // <-- TO MUSISZ DODAĆ
+}
+
+// Zaktualizuj interfejs Sales:
 export interface SalesPopupConfig {
   brand: string;
   title: string;
   subtitle: string;
-  products: PopupProduct[];
+  products?: PopupProduct[];
+  services?: ServiceDescription[]; // <-- TO MUSISZ DODAĆ
 }
 
-export interface NewsletterPopupConfig {
-  title: string;
-  subtitle: string;
-  note: string;
-  products: PopupProduct[];
-}
-
+// Zaktualizuj interfejs Limited:
 export interface LimitedPopupConfig {
-  brand?: string;
+  brand: string;
   titleLine1: string;
   ctaLabel: string;
   productImage: string;
@@ -95,6 +106,7 @@ export interface LimitedPopupConfig {
   newPrice: string;
   oldPrice: string;
   durationHours: number;
+  services?: ServiceDescription[]; // <-- TO MUSISZ DODAĆ
 }
 
 export interface PopupData {

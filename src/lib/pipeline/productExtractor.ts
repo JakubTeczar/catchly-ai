@@ -289,23 +289,51 @@ async function validateImageUrl(imageUrl: string): Promise<boolean> {
 // ─── Helper: filterValidProducts ─────────────────────────────────────────────
 // Dla produktów z name+price+imageUrl sprawdza czy obrazek faktycznie istnieje.
 // Produkty bez imageUrl przechodzą bez walidacji.
+const imageValidationCache = new Map<string, boolean>();
 
 async function filterValidProducts(
   products: ProductItem[],
   log: LogFn = console.log
 ): Promise<ProductItem[]> {
-  const results = await Promise.allSettled(
-    products.map(async (p) => {
-      if (!p.imageUrl) return p; // brak imageUrl — przepuszczamy
-      const valid = await validateImageUrl(p.imageUrl);
-      log(`[imgValidate] ${valid ? "✓" : "✗"} ${p.imageUrl}`);
-      return valid ? p : null;
-    })
-  );
+  const CONCURRENCY_LIMIT = 5; // Sprawdzamy max 5 obrazków naraz
+  const DELAY_BETWEEN_BATCHES = 300; // ms oddechu dla serwera
+  const validProducts: ProductItem[] = [];
 
-  return results
-    .filter((r) => r.status === "fulfilled" && r.value !== null)
-    .map((r) => (r as PromiseFulfilledResult<ProductItem>).value);
+  for (let i = 0; i < products.length; i += CONCURRENCY_LIMIT) {
+    const batch = products.slice(i, i + CONCURRENCY_LIMIT);
+    
+    const batchResults = await Promise.allSettled(
+      batch.map(async (p) => {
+        if (!p.imageUrl) return p; // brak imageUrl — przepuszczamy
+        
+        // Sprawdzamy cache
+        if (imageValidationCache.has(p.imageUrl)) {
+          const cachedValid = imageValidationCache.get(p.imageUrl);
+          return cachedValid ? p : null;
+        }
+
+        const valid = await validateImageUrl(p.imageUrl);
+        imageValidationCache.set(p.imageUrl, valid);
+        log(`[imgValidate] ${valid ? "✓" : "✗"} ${p.imageUrl}`);
+        
+        return valid ? p : null;
+      })
+    );
+
+    // Wyciąganie poprawnych wyników z batcha
+    for (const r of batchResults) {
+      if (r.status === "fulfilled" && r.value !== null) {
+        validProducts.push(r.value);
+      }
+    }
+
+    // Odczekaj chwilę przed kolejną paczką zapytań (jeśli to nie ostatni batch)
+    if (i + CONCURRENCY_LIMIT < products.length) {
+      await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_BATCHES));
+    }
+  }
+
+  return validProducts;
 }
 
 // ─── Helper: deduplicateProducts ─────────────────────────────────────────────

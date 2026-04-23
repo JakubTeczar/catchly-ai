@@ -21,9 +21,9 @@ interface Props {
 }
 
 const TABS = [
-  { key: "sales", label: "Opcja A — Sprzedaż" },
-  { key: "newsletter", label: "Opcja B — Newsletter" },
-  { key: "limited", label: "Opcja C — Ograniczona oferta" },
+  { key: "sales", label: "Opcja A - Sprzedaż" },
+  { key: "newsletter", label: "Opcja B - Newsletter" },
+  { key: "limited", label: "Opcja C - Ograniczona oferta" },
 ] as const;
 
 type TabKey = (typeof TABS)[number]["key"];
@@ -130,10 +130,10 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
           lineHeight: 1.3,
           margin: "0 0 0.5rem",
         }}>
-          Zebrałem dane o Twojej stronie.<br />Co możemy teraz zrobić:
+          Zebrałem dane o Twojej stronie.
         </h2>
         <p style={{ fontFamily: "Satoshi, sans-serif", fontSize: "0.875rem", color: "rgba(255,255,255,0.45)", margin: 0, lineHeight: 1.6 }}>
-          {data.introSubtitle ?? "Na podstawie analizy przygotowałem gotowe narzędzia do zwiększenia przychodów Twojej firmy."}
+          {"Na podstawie analizy przygotowałem gotowe narzędzia do zwiększenia konwersji."}
         </p>
       </div>
 
@@ -316,52 +316,144 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
       <div style={{ height: "1px", background: "rgba(255,255,255,0.06)" }} />
 
       {/* ── Save audit (only in variant A) ───────────────────────────── */}
-      {!hideEmailSave && <div className="audit-save-section">
-        {saveSent ? (
-          <div className="audit-save-success">
-            <span className="audit-save-success-icon">📬</span>
-            <div>
-              <p className="audit-save-success-title">Wysłano! Sprawdź swoją skrzynkę.</p>
-              <p className="audit-save-success-sub">Przesłaliśmy Ci kopię audytu i propozycje pop-upów.</p>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div>
-              <p className="audit-save-title">Chcesz zapisać ten audyt i propozycje pop-upów na później?</p>
-              <p className="audit-save-sub">Wpisz swój email — prześlemy Ci kopię</p>
-            </div>
-            <form className="audit-save-form" onSubmit={handleSaveSubmit}>
-              <input
-                type="email"
-                className="audit-save-input"
-                placeholder="twoj@email.pl"
-                value={saveEmail}
-                onChange={(e) => setSaveEmail(e.target.value)}
-                required
-              />
-              <button
-                type="submit"
-                className="audit-save-btn"
-                disabled={!saveEmail || !saveAgreed || saveLoading}
-              >
-                {saveLoading ? "Zapisuję..." : "Wyślij kopię"}
-              </button>
-            </form>
-            <label className="audit-save-terms">
-              <input
-                type="checkbox"
-                checked={saveAgreed}
-                onChange={(e) => setSaveAgreed(e.target.checked)}
-              />
-              <span>
-                Akceptuję <a href="#" className="audit-save-link">regulamin</a> i{" "}
-                <a href="#" className="audit-save-link">politykę prywatności</a>
-              </span>
-            </label>
-          </>
-        )}
-      </div>}
+    {/* ── Save audit (only in variant A) ───────────────────────────── */}
+{!hideEmailSave && (
+  <div style={{
+    background: "rgba(187,234,0,0.04)",
+    border: "1px solid rgba(187,234,0,0.18)",
+    borderRadius: "16px",
+    padding: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.25rem",
+  }}>
+    {saveSent ? (
+      <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "48px",
+          height: "48px",
+          background: "rgba(187,234,0,0.1)",
+          border: "1px solid rgba(187,234,0,0.25)",
+          borderRadius: "50%",
+          fontSize: "1.5rem",
+        }}>
+          📬
+        </div>
+        <div>
+          <h3 style={{
+            fontFamily: "Brockmann, sans-serif",
+            fontSize: "1.25rem",
+            color: "#fff",
+            margin: "0 0 0.25rem",
+            lineHeight: 1.3,
+          }}>
+            Wysłano! Sprawdź swoją skrzynkę.
+          </h3>
+          <p style={{
+            fontFamily: "Satoshi, sans-serif",
+            fontSize: "0.85rem",
+            color: "rgba(255,255,255,0.4)",
+            margin: 0,
+            lineHeight: 1.65,
+          }}>
+            Przesłaliśmy Ci kopię audytu i propozycje pop-upów.
+          </p>
+        </div>
+      </div>
+    ) : (
+      <>
+        <div>
+          <h3 style={{
+            fontFamily: "Brockmann, sans-serif",
+            fontSize: "1.25rem",
+            color: "#fff",
+            margin: "0 0 0.5rem",
+            lineHeight: 1.3,
+          }}>
+            Chcesz zapisać ten audyt i propozycje pop-upów na później?
+          </h3>
+          <p style={{
+            fontFamily: "Satoshi, sans-serif",
+            fontSize: "0.85rem",
+            color: "rgba(255,255,255,0.4)",
+            margin: 0,
+            lineHeight: 1.65,
+          }}>
+            Wpisz swój email — prześlemy Ci kopię
+          </p>
+        </div>
+        
+        <form onSubmit={handleSaveSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: "420px" }}>
+          <input
+            type="email"
+            placeholder="twoj@email.pl"
+            value={saveEmail}
+            onChange={(e) => setSaveEmail(e.target.value)}
+            required
+            style={{
+              padding: "10px 14px",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "10px",
+              color: "#fff",
+              fontSize: "0.875rem",
+              fontFamily: "Satoshi, sans-serif",
+              outline: "none",
+            }}
+          />
+          <button
+            type="submit"
+            disabled={!saveEmail || !saveAgreed || saveLoading}
+            style={{
+              padding: "12px",
+              background: "#BBEA00",
+              color: "#080808",
+              border: "none",
+              borderRadius: "10px",
+              fontSize: "0.9rem",
+              fontWeight: 700,
+              fontFamily: "Brockmann, sans-serif",
+              cursor: (!saveEmail || !saveAgreed || saveLoading) ? "not-allowed" : "pointer",
+              opacity: (!saveEmail || !saveAgreed || saveLoading) ? 0.5 : 1,
+              transition: "opacity 0.15s",
+            }}
+          >
+            {saveLoading ? "Zapisuję..." : "Wyślij kopię"}
+          </button>
+        </form>
+        
+        <label style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          fontFamily: "Satoshi, sans-serif",
+          fontSize: "0.75rem",
+          color: "rgba(255,255,255,0.4)",
+          marginTop: "0.2rem",
+          cursor: "pointer"
+        }}>
+          <input
+            type="checkbox"
+            checked={saveAgreed}
+            onChange={(e) => setSaveAgreed(e.target.checked)}
+            style={{ 
+              accentColor: "#BBEA00", 
+              cursor: "pointer",
+              width: "14px",
+              height: "14px"
+            }}
+          />
+          <span>
+            Akceptuję <a target="_blank" rel="noreferrer" href="https://dawids-dapper-site-8846f9.webflow.io/privacy-policy" style={{ color: "#BBEA00", textDecoration: "none" }}>politykę prywatności</a>
+          </span>
+        </label>
+      </>
+    )}
+  </div>
+)}
 
     </div>
   );

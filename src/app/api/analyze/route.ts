@@ -18,6 +18,10 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const rawUrl = body.url as string;
 
+    // --- ODBIERAMY ROZDZIELCZOŚĆ Z BODY ---
+    const screenWidth = body.width;  // np. 390 dla telefonu
+    const screenHeight = body.height; // np. 844 dla telefonu
+
     if (!rawUrl || rawUrl.length < 4) {
       return NextResponse.json({ error: "Podaj prawidłowy URL" }, { status: 400 });
     }
@@ -38,8 +42,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Fire and forget - do not await
-    runAnalysisPipeline(analysis.id, url).catch(console.error);
-
+    runAnalysisPipeline(analysis.id, url, screenWidth, screenHeight).catch(console.error);
     return NextResponse.json({ id: analysis.id });
   } catch (e) {
     console.error("[api/analyze]", e);

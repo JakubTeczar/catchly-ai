@@ -27,7 +27,7 @@ export function useAnalysisPolling(id: string) {
           break;
         }
         // Wait 2.5 seconds before next poll
-        await new Promise((r) => setTimeout(r, 2500));
+        await new Promise((r) => setTimeout(r, 1000));
       }
     }
 

@@ -35,6 +35,10 @@ export function LimitedOfferPopup({ visible, previewMode = false, onClose, confi
   const durationSeconds = (config.durationHours || 2) * 60 * 60;
   const { hours, minutes, seconds } = useCountdown(durationSeconds);
 
+  // Sprawdzamy co mamy do wyrenderowania
+  const hasProduct = Boolean(config.productImage || config.productName || config.newPrice);
+  const hasServices = Boolean(config.services && config.services.length > 0);
+
   const rootClass = [
     "limited-popup",
     visible ? "active" : "",
@@ -50,7 +54,8 @@ export function LimitedOfferPopup({ visible, previewMode = false, onClose, confi
 
         <h2 className="limited-title">{config.titleLine1}</h2>
 
-        {(config.productImage || config.productName || config.newPrice) && (
+        {/* --- SEKCJA PRODUKTU (E-COMMERCE) --- */}
+        {hasProduct && (
           <div className="limited-product">
             {config.productImage && (
               <img
@@ -71,6 +76,29 @@ export function LimitedOfferPopup({ visible, previewMode = false, onClose, confi
           </div>
         )}
 
+        {/* --- SEKCJA USŁUG (USŁUGOWE) --- */}
+        {!hasProduct && hasServices && (
+          <div className="limited-services">
+            {config.services!.map((service, idx) => (
+              <div key={idx} className="limited-service-item">
+                <div className="limited-service-icon">
+                  {/* Ikonka checkmark (ptaszek) */}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div className="limited-service-info">
+                  <h4 className="limited-service-title">{service.title}</h4>
+                  {service.shortDescription && (
+                    <p className="limited-service-desc">{service.shortDescription}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* --- LICZNIK CZASU --- */}
         <div className="limited-countdown">
           <div className="time-box">
             <span className="time-value">{String(hours).padStart(2, "0")}</span>
@@ -91,7 +119,7 @@ export function LimitedOfferPopup({ visible, previewMode = false, onClose, confi
             Nie
           </button>
           <button type="button" className="limited-cta cta-yes" onClick={onClose}>
-            Tak
+            {config.ctaLabel || "Tak"}
           </button>
         </div>
       </div>
