@@ -46,8 +46,8 @@ export function FeaturesSection({ compact }: Props) {
       <div className="fs-container">
 
         {/* Header */}
-        <div className="fs-header">
-          <h2 className="fs-title mt-4">Co wyróżnia Catchly</h2>
+        <div className="fs-header mt-4">
+          <h2 className="fs-title mt-8">Co wyróżnia Catchly</h2>
           <p className="fs-subtitle">
             Pełna automatyzacja konwersji, od analizy po optymalizację w czasie rzeczywistym
           </p>

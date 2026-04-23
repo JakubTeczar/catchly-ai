@@ -110,13 +110,15 @@ export function ProductsSection({ productsData, done }: Props) {
   const products = productsData?.products ?? [];
 
   let sectionTitle = "";
-  if (!done) {
-    sectionTitle = "Trwa analiza oferty. Może to zająć krótką chwilę...";
-  } else if (products.length === 0) {
-    sectionTitle = "Skanowanie oferty zakończone";
-  } else {
-    sectionTitle = isProduct ? "Wykryte produkty" : "Propozycje oferty";
-  }
+    if (!done) {
+      sectionTitle = "Analizuję ofertę. To może chwilę potrwać...";
+    } else if (products.length === 0) {
+      sectionTitle = "Zakończyłem analizę oferty";
+    } else {
+      sectionTitle = isProduct
+        ? "Zidentyfikowałem produkty w Twojej ofercie"
+        : "Zidentyfikowałem strukturę Twojej oferty";
+    }
 
   return (
     <div
@@ -180,20 +182,7 @@ export function ProductsSection({ productsData, done }: Props) {
             ))}
           </div>
         ) : products.length === 0 ? (
-          <div
-            className="p-4 rounded-xl"
-            style={{
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
-            <p
-              className="text-sm"
-              style={{ color: "rgba(255,255,255,0.35)", fontFamily: "Satoshi, sans-serif" }}
-            >
-              Nie udało się wyciągnąć produktów ze strony.
-            </p>
-          </div>
+          <></>
         ) : (
           <div className="space-y-2">
             {products.map((p, i) =>

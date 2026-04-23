@@ -65,15 +65,15 @@ function MockWebsite() {
 const WHAT_NEXT = [
   {
     label: "Pop-up sprzedażowy",
-    desc: "Subtelny panel na dole ekranu z wybranymi produktami, nie blokuje strony.",
+    desc: "Subtelny panel na dole ekranu z wybranymi produktami, nie blokuje strony i co ważniejsze nie irytuje użytkownika.",
   },
   {
-    label: "Newsletter z rabatem",
-    desc: "Powiadomienie z ofertą -10% w zamian za zapis. Buduje bazę i sprzedaje od razu.",
+    label: "Skuteczny Newsletter",
+    desc: "Powiadomienie z ofertą pokzującą relną wartość w zamian za zapis. Buduje bazę i sprzedaje od początku.",
   },
   {
     label: "Oferta ograniczona czasowo",
-    desc: "Odliczanie i pytanie TAK/NIE eliminuje odkładanie decyzji zakupowej.",
+    desc: "Odliczanie i pytanie TAK/NIE eliminuje odkładanie decyzji zakupowej na później.",
   },
 ];
 
@@ -130,7 +130,7 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
           lineHeight: 1.3,
           margin: "0 0 0.5rem",
         }}>
-          Zebrałem dane o Twojej stronie.
+          Mam już komplet informacji o Twojej stronie.
         </h2>
         <p style={{ fontFamily: "Satoshi, sans-serif", fontSize: "0.875rem", color: "rgba(255,255,255,0.45)", margin: 0, lineHeight: 1.6 }}>
           {"Na podstawie analizy przygotowałem gotowe narzędzia do zwiększenia konwersji."}
@@ -139,7 +139,7 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
 
       {/* ── Audit summary ─────────────────────────────────────────────── */}
       <div className="audit-col">
-        <p className="audit-col-label">Co można jeszcze zrobić</p>
+        <p className="audit-col-label">Oto moje propozycje, jak możesz sprzedawać więcej</p>
         <div className="audit-col-items">
           {WHAT_NEXT.map((item, i) => (
             <div key={i} className="audit-item audit-item--next">
@@ -158,14 +158,14 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
 
       {/* ── Popup proposals ───────────────────────────────────────────── */}
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <div>
+        {/* <div>
           <p style={{ fontFamily: "Brockmann, sans-serif", fontSize: "1.05rem", color: "rgba(255,255,255,0.9)", marginBottom: "0.2rem" }}>
             Propozycje dla Twojej strony
           </p>
           <p style={{ fontFamily: "Satoshi, sans-serif", fontSize: "0.8rem", color: "rgba(255,255,255,0.35)" }}>
             {data.popupsSubtitle ?? "3 gotowe pop-upy dopasowane do Twojej strony"}
           </p>
-        </div>
+        </div> */}
 
         {/* Opis z sidebarMessage */}
         <div
@@ -325,6 +325,7 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
     padding: "2rem",
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     gap: "1.25rem",
   }}>
     {saveSent ? (
@@ -365,7 +366,7 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
       </div>
     ) : (
       <>
-        <div>
+        <div >
           <h3 style={{
             fontFamily: "Brockmann, sans-serif",
             fontSize: "1.25rem",
@@ -380,13 +381,14 @@ export function PopupSection({ data, screenshotUrl, leadToolsData, hideEmailSave
             fontSize: "0.85rem",
             color: "rgba(255,255,255,0.4)",
             margin: 0,
+            textAlign: "center",
             lineHeight: 1.65,
           }}>
             Wpisz swój email — prześlemy Ci kopię
           </p>
         </div>
         
-        <form onSubmit={handleSaveSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: "420px" }}>
+        <form  className="w-full" onSubmit={handleSaveSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: "420px" }}>
           <input
             type="email"
             placeholder="twoj@email.pl"

@@ -61,7 +61,7 @@ function buildSidebarMessage(
       </div>`).join("\n");
 
   return `
-    <p class="desc-intro" style="margin-bottom: 16px;">Na podstawie analizy <strong>${brand}</strong> przygotowaliśmy strategię konwersji:</p>
+    <p class="desc-intro" style="margin-bottom: 16px;">Na podstawie analizy <strong>${brand}</strong> przygotowałem pop-upy dopasowane dla Ciebie</p>
     <div class="desc-options">${htmlOptions}</div>
   `;
 }

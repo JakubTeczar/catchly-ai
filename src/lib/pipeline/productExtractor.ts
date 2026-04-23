@@ -6,9 +6,9 @@ import type { LogFn } from "./logger";
 // ─── Konfiguracja ─────────────────────────────────────────────────────────────
 
 const PRICE_REGEX  = /(?:zł|PLN|złot[ych|ego]+|€|EUR|USD|price|cen[ay])/gi;
-const WINDOW       = 2000;  // znaków w każdą stronę od poszlaki cenowej
+const WINDOW       = 2500;  // znaków w każdą stronę od poszlaki cenowej
 const MIN_CLUES    = 16;     // min poszlak na stronie żeby nie szukać dalej
-const MAX_PRODUCTS = 6;    // max produktów w wyniku końcowym
+const MAX_PRODUCTS = 7;    // max produktów w wyniku końcowym
 const MAX_WINDOWS  = 60;    // max okien wycinanych per strona
 const MAX_BATCHES  = 6;     // max batchy GPT per wywołanie
 const BATCH_SIZE   = 6;     // okien per batch GPT
@@ -99,7 +99,10 @@ async function gptExtractProducts(
         Zasady:
         1. name: Pełna nazwa produktu (max 80 znaków), oczyszczona ze znaczników HTML.
         2. price: Aktualna cena z walutą (np. "29,99 zł"). Ignoruj ceny przekreślone i raty.
-        3. imageUrl: URL zdjęcia z atrybutu src/data-src/srcset w <img>. Jeśli brak → null. Nie wymyślaj.
+        3. imageUrl: URL zdjęcia produktu (szukaj w atrybutach src, data-src, data-lazy-src, srcset w tagach <img> lub <picture>).
+              - PREFERENCJA ROZMIARU: Jeśli kod HTML podaje kilka rozdzielczości/wersji zdjęcia (np. w atrybucie 'srcset' lub urlach z parametrami), preferuj te o wielkości około 300px - 500px i proporcjach zbliżonych do 1:1.
+              - Aktywnie ignoruj i omijaj skrajnie małe miniaturki (np. szerokość 40px), chyba że to absolutnie JEDYNE zdjęcie przypisane do produktu w danym fragmencie.
+              - Jeśli brak zdjęcia → null. Nie wymyślaj.
 
         WAŻNE: Jeden fragment może zawierać więcej niż jeden produkt — wyciągnij wszystkie.
         Filtruj: koszty dostawy, elementy nawigacji, banery bez produktu.
@@ -312,7 +315,10 @@ async function filterValidProducts(
     
     const batchResults = await Promise.allSettled(
       batch.map(async (p) => {
-        if (!p.imageUrl) return p;
+        if (!p.imageUrl) {
+          log(`[imgValidate] ⚠️ Odrzucam: ${p.name} (brak linku do zdjęcia)`);
+          return null;
+        }
         
         if (imageValidationCache.has(p.imageUrl)) {
           return imageValidationCache.get(p.imageUrl) ? p : null;

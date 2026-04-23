@@ -72,7 +72,7 @@ async function analyzePageForLeadTools(url: string, text: string): Promise<LeadT
   ### ZADANIA:
   1. **Identyfikacja**: Znajdź wyłącznie ISTNIEJĄCE na stronie elementy (formularze, newslettery, demo, CTA kontaktu, kalkulatory, chaty, ebooki, wyceny).
   2. **Weryfikacja**: Nie wymyślaj elementów. Jeśli czegoś nie ma w tekście — nie dodawaj tego.
-  3. **Kontekst**: Znajdź fragment tekstu otaczający element (sourceText).
+  3. **Kontekst**: Znajdź fragment tekstu otaczający element (sourceText) Pod żadnym pozorem nie dodawaj tutaj żanych informacji (jeśli wykryjesz że claudlare ukrył dane i jest np coś typu  [email protected] to nie zwracaj takich słów te jedynie możesz pominąć).
 
 tutaj masz informacj co odpwoieda jakiemu typowi 
 type = {
@@ -146,7 +146,7 @@ Twoim zadaniem jest wybranie najważniejszych elementów i przedstawienie ich w 
 7. **Pełna widoczność danych**: W polach "label" oraz "sourceText" ZAWSZE podawaj pełne numery telefonów i adresy e-mail znalezione w źródle. Zabrania się ich maskowania lub pomijania.
 
 ### ZADANIA:
-1. Z LISTY ZNALEZISK: Wybierz max 4 najważniejsze, prawdziwe sposoby kontaktu. Scal duplikaty (jeśli jest ten sam e-mail i telefon w 3 miejscach, zrób z tego jeden punkt).
+1. Z LISTY ZNALEZISK: Wybierz max 4 najważniejsze, prawdziwe sposoby kontaktu - jeśli jest ten sam typ pozyskania klienta to niepowtażaj go klika razy (Chyba że i tak się znacząco różnią). Scal duplikaty (jeśli jest ten sam e-mail i telefon w 3 miejscach, zrób z tego jeden punkt).
 2. Z LISTY SUGESTII: Wybierz 2-3 najciekawsze propozycje rozwoju.
 3. Połącz wszystko w jedną listę.
 4. Wszyskie opisy i teksty muszą być po polsku 

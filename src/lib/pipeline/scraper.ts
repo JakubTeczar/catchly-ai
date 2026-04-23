@@ -48,9 +48,11 @@ export async function scrapeUrl(url: string, useSuper: boolean = false, render: 
 
   console.log(`[scrape.do] → ${url} | super=${useSuper} | w kolejce: ${scrapeSemaphore.waiting}, aktywne: ${scrapeSemaphore.running}`);
 
+  const timeout = render ? 30000 : 10000;
+
   try {
     const res = await scrapeSemaphore.run(() =>
-      fetch(apiUrl, { signal: AbortSignal.timeout(30000) })
+      fetch(apiUrl, { signal: AbortSignal.timeout(timeout) })
     );
 
     console.log(`[scrape.do] ← ${url} | status: ${res.status} ${res.statusText}`);

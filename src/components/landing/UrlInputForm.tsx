@@ -78,7 +78,7 @@ export function UrlInputForm() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             disabled={loading}
-            className="flex-1  bg-transparent text-white placeholder:text-white/30 text-sm outline-none py-1.5"
+            className="flex-1  bg-transparent text-white placeholder:text-white/60 text-sm outline-none py-1.5"
           />
           <button
             type="submit"

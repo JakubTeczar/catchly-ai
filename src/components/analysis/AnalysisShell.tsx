@@ -19,10 +19,10 @@ interface Props {
 }
 
 const STEPS = [
-  { key: "screenshotDone", label: "Skanujemy Twoją stronę..." },
-  { key: "styleDone", label: "Analizujemy styl i kolory marki..." },
-  { key: "subpagesDone", label: "Skanujemy podstrony i zbieramy informacje..." },
-  { key: "leadToolsDone", label: "Wykrywamy narzędzia lead generation..." },
+  { key: "screenshotDone", label: "Skanuję Twoją stronę..." },
+  { key: "styleDone", label: "Analizuję styl i kolory Twojej marki..." },
+  { key: "subpagesDone", label: "Przeglądam podstrony i zbieram informacje..." },
+  { key: "leadToolsDone", label: "Wykrywam narzędzia do pozyskiwania leadów..." },
 ] as const;
 
 const STEP_NAMES = ["Skanowanie wizualne", "Identyfikacja marki", "Mapowanie struktury", "Zdobywania klientów"];

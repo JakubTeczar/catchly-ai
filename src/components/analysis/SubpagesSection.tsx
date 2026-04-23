@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Globe, ExternalLink, ChevronRight } from "lucide-react";
 import type { SubpageSummary } from "@/types/analysis";
 import { ScannerBar } from "./ScannerBar";
@@ -8,6 +9,8 @@ interface Props {
   subpagesData: SubpageSummary[] | null;
   done: boolean;
 }
+
+const INITIAL_COUNT = 4;
 
 function SubpageCard({ page }: { page: SubpageSummary }) {
   const shortUrl = page.url.replace(/^https?:\/\/[^/]+/, "") || "/";
@@ -57,30 +60,62 @@ function SkeletonCard() {
 }
 
 export function SubpagesSection({ subpagesData, done }: Props) {
+  const [showAll, setShowAll] = useState(false);
+
+  const hasMore = (subpagesData?.length ?? 0) > INITIAL_COUNT;
+  const visiblePages = showAll ? subpagesData : subpagesData?.slice(0, INITIAL_COUNT);
+
   return (
     <div className="rounded-2xl relative overflow-hidden"
       style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
       <ScannerBar active={!done} />
       <div className="p-5 space-y-4">
 
-      <div className="flex items-center gap-2">
-        <Globe className="w-4 h-4" style={{ color: "#92B2F2" }} />
-        <h2 className="text-base font-medium text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
-          Analiza podstron
-        </h2>
-        {done && subpagesData && (
-          <span className="ml-auto text-xs" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Satoshi, sans-serif" }}>
-            {subpagesData.length} podstron
-          </span>
-        )}
-      </div>
+        <div className="flex items-center gap-2">
+          <Globe className="w-4 h-4" style={{ color: "#92B2F2" }} />
+          <h2 className="text-base font-medium text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
+          {done 
+              ? "Sprawdziłem Twoją stronę i mam kilka ważnych informacji"
+              : "Sprawdzam Twoje podstrony..."
+            }
+          </h2>
+          {done && subpagesData && (
+            <span className="ml-auto text-xs" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Satoshi, sans-serif" }}>
+              {subpagesData.length} podstron
+            </span>
+          )}
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {!done
-          ? [0,1,2,3].map(i => <SkeletonCard key={i} />)
-          : subpagesData?.map((page, i) => <SubpageCard key={i} page={page} />)
-        }
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {!done
+            ? [0,1,2,3].map(i => <SkeletonCard key={i} />)
+            : visiblePages?.map((page, i) => <SubpageCard key={i} page={page} />)
+          }
+        </div>
+
+        {done && hasMore && (
+          <button
+            onClick={() => setShowAll(prev => !prev)}
+            className="w-full py-2 text-xs rounded-lg transition-colors"
+            style={{
+              color: "rgba(255,255,255,0.3)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              background: "transparent",
+              fontFamily: "Satoshi, sans-serif",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.color = "rgba(255,255,255,0.6)";
+              e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.color = "rgba(255,255,255,0.3)";
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            {showAll ? "Zwiń" : `Rozwiń wszystkie (${subpagesData!.length - INITIAL_COUNT} więcej)`}
+          </button>
+        )}
+
       </div>
     </div>
   );

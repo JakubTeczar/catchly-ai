@@ -42,7 +42,10 @@ export function StyleSection({ styleData, done }: Props) {
       <div className="flex items-center gap-2">
         <Palette className="w-4 h-4" style={{ color: "#BBEA00" }} />
         <h2 className="text-base font-medium text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
-          Styl marki
+         {done 
+          ? "Przeanalizowałem styl Twojej marki"
+          : "Analizuję styl Twojej marki..."
+        }
         </h2>
       </div>
 

@@ -1,6 +1,9 @@
+"use client";
+
 import { AnalysisShell } from "@/components/analysis/AnalysisShell";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState, use } from "react";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -20,16 +23,40 @@ function CatchlyLogo() {
   );
 }
 
-export default async function AnalysisPage({ params }: Props) {
-  const { id } = await params;
+function TypingText({ text, onDone }: { text: string; onDone?: () => void }) {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayed(text.slice(0, i + 1));
+      i++;
+      if (i === text.length) {
+        clearInterval(interval);
+        onDone?.();
+      }
+    }, 25);
+
+    return () => clearInterval(interval);
+  }, [text]); // tylko text, bez onDone
+
+  return (
+    <>
+      {displayed}
+      <span className="animate-pulse">|</span>
+    </>
+  );
+}
+
+export default function AnalysisPage({ params }: Props) {
+  const { id } = use(params);
+  const [typingDone, setTypingDone] = useState(false);
 
   return (
     <main className="min-h-screen bg-[#080808] text-white">
-      {/* Subtle top glow */}
       <div className="pointer-events-none fixed top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-7 space-y-8">
-        {/* Header */}
         <div className="flex items-center justify-between">
           <Link
             href="/"
@@ -42,16 +69,31 @@ export default async function AnalysisPage({ params }: Props) {
           <CatchlyLogo />
         </div>
 
-        {/* Title */}
         <div className="space-y-1.5">
-          <h1
-            className="text-2xl md:text-3xl text-white"
-            style={{ fontFamily: "Brockmann, sans-serif" }}
-          >
-            Analiza Twojej strony
+          <h1 className="text-2xl md:text-3xl text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
+            <div className="text-[#BBEA00] inline">
+              <TypingText
+                text="Cześć! Z tej strony Agent AI Catchly,"
+                onDone={() => setTypingDone(true)}
+              />
+            </div>
+
+            <span
+              className={`transition-all duration-1000 delay-200 ${
+                typingDone ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              }`}
+            >
+              {" "}właśnie analizuję Twoją stronę
+            </span>
           </h1>
-          <p className="text-white/35 text-sm" style={{ fontFamily: "Satoshi, sans-serif" }}>
-            Skanujemy Twoją stronę i przygotowujemy spersonalizowany raport
+
+          <p
+            className={`text-white/35 text-sm transition-all duration-800 delay-600 ${
+              typingDone ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            }`}
+            style={{ fontFamily: "Satoshi, sans-serif" }}
+          >
+            Przygotowuję spersonalizowany raport, w jaki sposób możesz zwiększyć konwersję
           </p>
         </div>
 

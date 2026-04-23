@@ -59,7 +59,7 @@ export default function HomePage() {
           </h1>
           <p
             className="text-sm md:text-base mb-8 max-w-sm"
-            style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Satoshi, sans-serif" }}
+            style={{ color: "rgba(255,255,255,0.6)", fontFamily: "Satoshi, sans-serif" }}
           >
             Wpisz URL swojej strony i odbierz darmowy audyt AI
           </p>

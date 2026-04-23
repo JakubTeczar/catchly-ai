@@ -125,7 +125,7 @@ export function OfferSection({ analysisId }: Props) {
           ✦ Przedsprzedaż — tylko do 1 maja 2026
         </div>
         <h2 className="text-3xl md:text-4xl text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
-          Kup dostęp na całe życie
+          Kup dożywotnią licencje
         </h2>
         <p className="text-sm" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "Satoshi, sans-serif" }}>
           Nowe podejście AI agent, który uczy się razem z Twoją stroną
@@ -136,13 +136,13 @@ export function OfferSection({ analysisId }: Props) {
       <div className="p-5 rounded-2xl space-y-4"
         style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
         <div className="space-y-1 text-center">
-          <div className="flex items-center justify-center gap-2 text-sm"
-            style={{ color: "rgba(255,255,255,0.35)", fontFamily: "Satoshi, sans-serif" }}>
+          <div className="flex items-center justify-center gap-2 text-lg"
+            style={{ color: "rgba(255,255,255,0.8)", fontFamily: "Satoshi, sans-serif" }}>
             <Clock className="w-3.5 h-3.5" />
             Cena przedsprzedażowa wygasa za:
           </div>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Satoshi, sans-serif" }}>
-            Premiera produktu: <span style={{ color: "rgba(255,255,255,0.45)" }}>{LAUNCH_DATE}</span>
+          <p className="text-md" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "Satoshi, sans-serif" }}>
+            Premiera produktu: <span style={{ color: "rgba(255,255,255,0.85)" }}>{LAUNCH_DATE}</span>
           </p>
         </div>
         <div className="flex justify-center gap-3">
@@ -170,17 +170,19 @@ export function OfferSection({ analysisId }: Props) {
           Catchly jest dla Ciebie
         </p>
         <h3 style={{ margin: 0, fontSize: "1.2rem", fontFamily: "Brockmann, sans-serif", color: "#fff", lineHeight: 1.35 }}>
-          Jeśli chcesz zatrudnić handlowca,<br />który pracuje na poprawę konwersji 24/7
+          Catchly to nie tylko pop-upy, to Twój prywatny agent AI <br></br>który pracuje 24/7 nad zwiększaniem konwersji.
         </h3>
+        Jak on działa:
         <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
           {[
-            "Nie masz czasu na sprawdzanie co działa na klientów, a co nie",
-            "Nie chcesz logować się do paneli i nimi zarządzać",
-            "Chcesz żeby Twoja strona zarabiała więcej bez dodatkowej pracy z Twojej strony",
-            "Nie masz budżetu na pełnoetatowego specjalistę ds. konwersji",
-            "Chcesz testować i wdrażać zmiany bez angażowania deweloperów",
-          ].map((item, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+            "Agent AI analizuje ruch na Twojej stronie, zachowania użytkowników",
+            "Na tej podstawie tworzy konkretne rekomendacje dopasowane do Twojej oferty i celów",
+            "Sprawdza, co działa na Twoich klientów i z czasem optymalizuje konwersję",
+            "Każdą zmianę najpierw widzisz Ty, możesz ją zaakceptować lub odrzucić",
+            "Nie masz przy sobie laptopa? Catchly może kontaktować się z tobą przez whats'appa",
+            "Dla lepszych wyników AI uwzględnia też dane z rynku i konkurencji"
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#BBEA00", flexShrink: 0, marginTop: "0.35rem" }} />
               <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.45)", fontFamily: "Satoshi, sans-serif", lineHeight: 1.6 }}>
                 {item}
@@ -191,7 +193,7 @@ export function OfferSection({ analysisId }: Props) {
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", paddingTop: "0.75rem", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
           <ArrowRight style={{ width: 15, height: 15, flexShrink: 0, color: "#BBEA00" }} />
           <span style={{ fontSize: "0.9rem", fontFamily: "Brockmann, sans-serif", fontWeight: 600, color: "#BBEA00" }}>
-            ...to Catchly jest dla Ciebie.
+            ...A wszystko po to, żeby Twoja strona konwertowała lepiej.
           </span>
         </div>
       </div>
@@ -246,6 +248,11 @@ export function OfferSection({ analysisId }: Props) {
         </div>
       </div>
 
+      {/* Differentiators — animated features section */}
+      <FeaturesSection compact />
+
+
+
       {/* Timeline */}
       <div className="p-5 rounded-2xl space-y-4"
         style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)" }}>
@@ -295,10 +302,6 @@ export function OfferSection({ analysisId }: Props) {
           </span>
         </div>
       </div>
-
-      {/* Differentiators — animated features section */}
-      <FeaturesSection compact />
-
       {/* Price + CTA */}
       <div className="p-6 md:p-8 rounded-2xl space-y-5"
         style={{ background: "rgba(187,234,0,0.06)", border: "1px solid rgba(187,234,0,0.2)" }}>

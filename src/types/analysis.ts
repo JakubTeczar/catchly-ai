@@ -35,6 +35,8 @@ export interface ProductItem {
   price: string;
   imageUrl?: string;
   pageUrl?: string;
+  imageWidth?: number | null;
+  imageHeight?: number | null;
 }
 
 export interface ProductsData {

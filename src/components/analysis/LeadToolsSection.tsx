@@ -104,7 +104,7 @@ export function LeadToolsSection({ leadToolsData, done }: Props) {
       <div className="flex items-center gap-2">
         <Magnet className="w-4 h-4" style={{ color: "#BBEA00" }} />
         <h2 className="text-base font-medium text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
-          Aktualne sposoby zdobywania klientów
+         {done ? "Oto twoje aktualne sposoby na pozyskiwanie klientów" : "Szukam w jaki sposób obecnie pozyskujesz klientów.."} 
         </h2>
       </div>
 

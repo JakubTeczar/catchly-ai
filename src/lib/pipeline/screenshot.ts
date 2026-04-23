@@ -12,14 +12,14 @@ export async function takeScreenshot(
   if (!SCRAPE_API_KEY) throw new Error("Brak SCRAPE_DO_API_KEY");
 
   // Konfiguracja wymiarów
-  const width = screenWidth < 800 ? "816" : "1920";
-  const height = screenWidth < 800 ? "400" : "1080";
+  const width = screenWidth < 800 ? "400" : "1920";
+  const height = screenWidth < 800 ? "816" : "1080";
 
   // Skrypt JS wykonywany w przeglądarce scrape.do
-  const playWithBrowser = JSON.stringify([
-    {
-      Action: "Execute",
-      Execute: `
+const playWithBrowser = JSON.stringify([
+  {
+    Action: "Execute",
+    Execute: `
         (function() {
           const style = document.createElement('style');
           style.textContent = '* { transition: none !important; animation: none !important; }';
@@ -36,20 +36,37 @@ export async function takeScreenshot(
 
             points.forEach(([x, y]) => {
               let el = document.elementFromPoint(x, y);
+
+              // 1. Jeśli element pod punktem jest hostem Shadow DOM, wejdź do środka
+              if (el && el.shadowRoot) {
+                el = el.shadowRoot.elementFromPoint(x, y) || el;
+              }
+
               while (el && el !== document.body && el !== document.documentElement) {
                 const s = window.getComputedStyle(el);
                 const zIndex = parseInt(s.zIndex) || 0;
+                
                 if ((s.position === 'fixed' || s.position === 'absolute') && zIndex > 0) {
-                  if (/cookie|polityk|zgoda|consent|akceptuj|RODO|understand|przyjmuję/i.test(el.innerText)) {
-                    const buttons = el.querySelectorAll('button, a, [role="button"]');
+                  // innerText nie zawsze widzi tekst w Shadow DOM, używamy textContent jako backup
+                  const content = el.innerText || el.textContent || "";
+                  
+                  if (/cookie|polityk|zgoda|consent|akceptuj|RODO|understand|przyjmuję/i.test(content)) {
+                    
+                    // 2. Szukamy przycisków w elemencie i jego Shadow Root (jeśli istnieje)
+                    let buttons = Array.from(el.querySelectorAll('button, a, [role="button"]'));
+                    if (el.shadowRoot) {
+                      buttons = buttons.concat(Array.from(el.shadowRoot.querySelectorAll('button, a, [role="button"]')));
+                    }
+
                     let clicked = false;
                     buttons.forEach(btn => {
-                      const txt = btn.innerText.toLowerCase();
+                      const txt = (btn.innerText || btn.textContent || "").toLowerCase();
                       if (/akceptuj|accept|zgoda|allow|agree|OK|wszystkie/i.test(txt) && !/ustawienia|settings|manage/i.test(txt)) {
                         btn.click();
                         clicked = true;
                       }
                     });
+
                     if (clicked) {
                       setTimeout(() => { if(el && el.parentNode) el.remove(); }, 200);
                     } else {
@@ -58,14 +75,17 @@ export async function takeScreenshot(
                     break;
                   }
                 }
-                el = el.parentElement;
+                
+                // 3. KLUCZOWA ZMIANA: Wyjście z Shadow DOM do rodzica w wyższym drzewie
+                el = el.parentElement || (el.getRootNode && el.getRootNode().host);
               }
             });
 
+            // Twoja oryginalna pętla czyszcząca (z poprawką na wyższe z-index)
             document.querySelectorAll('*').forEach(el => {
               const s = window.getComputedStyle(el);
               if ((s.position === 'fixed' || s.position === 'absolute') && (parseInt(s.zIndex) || 0) > 100) {
-                if (/cookie|polityk|zgoda|consent|akceptuj/i.test(el.innerText)) el.remove();
+                if (/cookie|polityk|zgoda|consent|akceptuj/i.test(el.innerText || el.textContent)) el.remove();
               }
             });
 
@@ -81,8 +101,8 @@ export async function takeScreenshot(
           setTimeout(() => { clearInterval(interval); obs.disconnect(); }, 5000);
         })();
       `,
-    },
-  ]);
+  }
+]);
 
   const params = new URLSearchParams({
     token: SCRAPE_API_KEY,
