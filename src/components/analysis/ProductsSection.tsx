@@ -111,7 +111,7 @@ export function ProductsSection({ productsData, done }: Props) {
 
   let sectionTitle = "";
   if (!done) {
-    sectionTitle = "Skanowanie oferty, to może zająć chwilę...";
+    sectionTitle = "Trwa analiza oferty. Może to zająć krótką chwilę...";
   } else if (products.length === 0) {
     sectionTitle = "Skanowanie oferty zakończone";
   } else {

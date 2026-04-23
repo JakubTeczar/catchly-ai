@@ -11,6 +11,7 @@ function parsePrice(str: string): number | null {
   return isNaN(num) || num <= 0 ? null : num;
 }
 
+type BusinessType = "product" | "service";
 
 interface PopupOption {
   title: string;
@@ -220,6 +221,30 @@ const userPrompt = `
         "how": "Co posiada? Wymień elementy budujące pilność: np. licznik odliczający czas, przyciągający uwagę nagłówek o ograniczonej dostępności i bardzo kontrastowy przycisk szybkiej akcji CTA. (max 200 znaków)"
       }
     }
+
+  ### PRZYKŁAD POPRAWNIE WYGENEROWANEGO OBIEKTU (Wzór):
+     {
+        "brand": "EcoGlow Cosmetics",
+        "salesTitle": "Bestsellery dla Twojej skóry",
+        "salesSubtitle": "Sprawdź produkty, które pokochały tysiące kobiet",
+        "salesProductIndexes": [0, 2],
+        "newsletterTitle": "Dołącz do klubu EcoGlow",
+        "newsletterSubtitle": "Odbierz kod rabatowy na pierwsze zakupy",
+        "newsletterNote": "Zapisując się, zgadzasz się na otrzymywanie ofert. Kod <strong>-10%</strong> wyślemy na e-mail.",
+        "newsletterProductIndexes": [1, 3, 4, 5],
+        "limitedHeadline": "Tylko przez najbliższe 15 minut!",
+        "limitedCtaLabel": "Chcę zniżkę -15%",
+        "limitedProductIndex": 0,
+        "optionA": {
+          "title": "Subtelna sprzedaż",
+          "why": "Zamiast agresywnego ataku, pokazujemy produkty komplementarne do tych, które użytkownik już oglądał, zwiększając zaufanie.",
+          "when": "Wyświetl po 45 sekundach aktywnego przeglądania karty produktu, gdy zainteresowanie ofertą jest najwyższe.",
+          "how": "Minimalistyczny pasek u dołu ekranu z miniaturami produktów i krótkim hasłem 'Inni wybrali również'."
+        },
+        "optionB": { "title": "Wymiana wartości", "why": "...", "when": "...", "how": "..." },
+        "optionC": { "title": "Limitowana oferta", "why": "...", "when": "...", "how": "..." }
+      }
+
      `: `
         "brand": "Nazwa marki",
         "salesTitle": "Tytuł popupu sprzedaży",
@@ -251,6 +276,37 @@ const userPrompt = `
           "how": "Co posiada? Wymień elementy budujące pilność: np. licznik odliczający czas, przyciągający uwagę nagłówek o ograniczonej dostępności i bardzo kontrastowy przycisk szybkiej akcji CTA. (max 200 znaków)"
         }
       }
+
+      ### PRZYKŁAD POPRAWNIE WYGENEROWANEGO OBIEKTU (Wzór):
+      {
+        "brand": "Kancelaria LexFlow",
+        "salesTitle": "Potrzebujesz wsparcia prawnego?",
+        "salesSubtitle": "Nasi eksperci są gotowi Ci pomóc",
+        "salesServices": [
+          { "title": "Konsultacja Online", "shortDescription": "Szybka porada prawna bez wychodzenia z domu w 15 minut." },
+          { "title": "Audyt Umów", "shortDescription": "Sprawdzimy Twoją umowę pod kątem bezpiecznych zapisów." }
+        ],
+        "newsletterTitle": "Bądź na bieżąco z prawem",
+        "newsletterSubtitle": "Pobierz darmowy poradnik o zmianach w podatkach",
+        "newsletterNote": "Odbierz darmowy PDF i 10% zniżki na pierwszą usługę.",
+        "newsletterServices": [
+          { "title": "E-book Podatkowy", "shortDescription": "Kompletne zestawienie zmian w przepisach na rok 2024." }
+        ],
+        "limitedHeadline": "Szybka pomoc prawna",
+        "limitedCtaLabel": "Zarezerwuj termin",
+        "limitedServices": [
+          { "title": "Interwencja Ekspres", "shortDescription": "Analiza sprawy w ciągu 2 godzin od zgłoszenia." }
+        ],
+        "optionA": {
+          "title": "Doradca Kontekstowy",
+          "why": "Klient czytający o prawie spadkowym szuka spokoju, więc oferujemy mu konkretną ścieżkę rozwiązania zamiast reklamy ogólnej.",
+          "when": "Gdy użytkownik spędzi na sekcji 'Usługi' więcej niż 30 sekund.",
+          "how": "Popup z twarzą eksperta i pytaniem 'Masz wątpliwości w tym temacie? Pomogę Ci je rozwiać'."
+        },
+        "optionB": { "title": "Wymiana wartości", "why": "...", "when": "...", "how": "..." },
+        "optionC": { "title": "Limitowana oferta", "why": "...", "when": "...", "how": "..." }
+      }
+
      `}
     `;
 

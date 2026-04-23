@@ -291,25 +291,31 @@ async function validateImageUrl(imageUrl: string): Promise<boolean> {
 // Produkty bez imageUrl przechodzą bez walidacji.
 const imageValidationCache = new Map<string, boolean>();
 
+// Zaktualizowana funkcja filterValidProducts
 async function filterValidProducts(
   products: ProductItem[],
+  targetCount: number, // <--- NOWOŚĆ: podajemy ile produktów potrzebujemy
   log: LogFn = console.log
 ): Promise<ProductItem[]> {
-  const CONCURRENCY_LIMIT = 5; // Sprawdzamy max 5 obrazków naraz
-  const DELAY_BETWEEN_BATCHES = 300; // ms oddechu dla serwera
+  const CONCURRENCY_LIMIT = 5;
+  const DELAY_BETWEEN_BATCHES = 300;
   const validProducts: ProductItem[] = [];
 
   for (let i = 0; i < products.length; i += CONCURRENCY_LIMIT) {
+    // 🛑 EARLY EXIT: Jeśli mamy już wymaganą liczbę produktów, przerywamy weryfikację!
+    if (validProducts.length >= targetCount) {
+      log(`[imgValidate] Zebrano już ${targetCount} produktów z działającymi obrazkami. Przerywam skanowanie reszty.`);
+      break;
+    }
+
     const batch = products.slice(i, i + CONCURRENCY_LIMIT);
     
     const batchResults = await Promise.allSettled(
       batch.map(async (p) => {
-        if (!p.imageUrl) return p; // brak imageUrl — przepuszczamy
+        if (!p.imageUrl) return p;
         
-        // Sprawdzamy cache
         if (imageValidationCache.has(p.imageUrl)) {
-          const cachedValid = imageValidationCache.get(p.imageUrl);
-          return cachedValid ? p : null;
+          return imageValidationCache.get(p.imageUrl) ? p : null;
         }
 
         const valid = await validateImageUrl(p.imageUrl);
@@ -324,18 +330,21 @@ async function filterValidProducts(
     for (const r of batchResults) {
       if (r.status === "fulfilled" && r.value !== null) {
         validProducts.push(r.value);
+        
+        // Możemy dorzucić bezpiecznik wewnątrz samego batcha, 
+        // żeby nie dodać np. 8 produktów, jeśli chcemy 6.
+        if (validProducts.length >= targetCount) break;
       }
     }
 
-    // Odczekaj chwilę przed kolejną paczką zapytań (jeśli to nie ostatni batch)
-    if (i + CONCURRENCY_LIMIT < products.length) {
+    // Odczekaj chwilę tylko, jeśli pętla ma iść dalej
+    if (i + CONCURRENCY_LIMIT < products.length && validProducts.length < targetCount) {
       await new Promise(resolve => setTimeout(resolve, DELAY_BETWEEN_BATCHES));
     }
   }
 
   return validProducts;
 }
-
 // ─── Helper: deduplicateProducts ─────────────────────────────────────────────
 
 function deduplicateProducts(products: ProductItem[]): ProductItem[] {
@@ -417,73 +426,116 @@ export async function smartExtractProducts(
   // ── 1. Skan homepage ──────────────────────────────────────────────────────
   log(`[smart] ─── KROK 1: skan homepage ───`);
   const { windows: homeWindows, products: homeProducts } = await scanPage(homepageHtml, homepageUrl, log);
-  log(`[smart] KROK 1: poszlaki=${homeWindows.length}, produkty=${homeProducts.length}`);
+  
+  const finalValidProducts: ProductItem[] = [];
 
   if (homeWindows.length >= MIN_CLUES) {
-    log(`[smart] ✓ Wystarczy poszlak na homepage → product`);
+    log(`[smart] ✓ Wystarczy poszlak na homepage → walidacja`);
     const deduped = deduplicateProducts(homeProducts);
-    const validated = await filterValidProducts(deduped, log);
-    log(`[smart] Po walidacji obrazków: ${validated.length}/${deduped.length}`);
-    return { businessType: "product", products: validated.slice(0, MAX_PRODUCTS) };
+    const validated = await filterValidProducts(deduped, MAX_PRODUCTS, log);
+    finalValidProducts.push(...validated);
+    
+    if (finalValidProducts.length >= MAX_PRODUCTS) {
+      return { businessType: "product", products: finalValidProducts.slice(0, MAX_PRODUCTS) };
+    }
   }
 
-  // ── 2 + 3. Pięć prób przez AI ────────────────────────────────────────────
+  // ── 2. Próby przez AI ─────────────────────────────────────────────────────
   const usedLinks = new Set<string>([homepageUrl]);
   const previouslyChosen: string[] = [];
-  let allProducts: ProductItem[] = [...homeProducts];
+  const backgroundTasks: Promise<void>[] = []; // Zadania kumulują się między próbami
+  let stopRequested = false;
 
   for (let attempt = 1; attempt <= 5; attempt++) {
+    if (stopRequested || finalValidProducts.length >= MAX_PRODUCTS) break;
+
     log(`[smart] ─── KROK 2 (próba ${attempt}/5): AI szuka linków ───`);
     const result = await findProductLinks(allLinks, homepageUrl, usedLinks, previouslyChosen, log);
 
     if (result.type === "none") {
-      log(`[smart] Próba ${attempt}: AI nie znalazło linków → koniec`);
+      log(`[smart] Próba ${attempt}: AI nie znalazło nowych linków.`);
+      // Jeśli AI nic nie znalazło, dajemy szansę zadaniom, które już działają w tle
+      if (backgroundTasks.length > 0) {
+        log(`[smart] Czekam na zadania z tła (ostatnia szansa)...`);
+        await Promise.allSettled(backgroundTasks);
+      }
       break;
     }
 
     const linksToScrape = (result.type === "direct" ? result.links : [result.link]).slice(0, 9);
-    log(`[smart] Próba ${attempt}: typ=${result.type} | do scrapowania: ${linksToScrape.length} linków (równolegle)`);
-
     for (const link of linksToScrape) {
       usedLinks.add(link);
       previouslyChosen.push(link);
     }
 
-    const scrapeResults = await Promise.allSettled(
-      linksToScrape.map(async (link) => {
-        log(`[smart] Scrapuję: ${link}`);
-        const html = await scrapeSmartRender(link, log);
-        const { products } = await scanPage(html, link, log);
-        log(`[smart] ${link} → ${products.length} produktów`);
-        return products;
-      })
-    );
+    // Odpalamy linki z bieżącej próby
+    for (const link of linksToScrape) {
+      if (stopRequested || finalValidProducts.length >= MAX_PRODUCTS) break;
 
-    for (const r of scrapeResults) {
-      if (r.status === "fulfilled") allProducts.push(...r.value);
-      else log(`[smart] BŁĄD scrapowania: ${r.reason}`);
+      log(`[smart] Scrapuję: ${link} (soft timeout 4s)`);
+
+      const task = (async () => {
+        if (stopRequested) return;
+        try {
+          // UWAGA: Tu możesz dodać twardy timeout dla samego scrapeUrl jeśli Twoja funkcja go nie ma
+          const html = await scrapeSmartRender(link, log);
+          if (stopRequested) return;
+          
+          const { products } = await scanPage(html, link, log);
+          if (stopRequested || products.length === 0) return;
+
+          const newProducts = products.filter(p => 
+            !finalValidProducts.some(fp => fp.name.toLowerCase().trim() === p.name.toLowerCase().trim())
+          );
+          
+          const missingCount = MAX_PRODUCTS - finalValidProducts.length;
+          if (missingCount <= 0) { stopRequested = true; return; }
+
+          const validatedFromPage = await filterValidProducts(newProducts, missingCount, log);
+          
+          for (const v of validatedFromPage) {
+            if (finalValidProducts.length < MAX_PRODUCTS && 
+                !finalValidProducts.some(fp => fp.name.toLowerCase().trim() === v.name.toLowerCase().trim())) {
+              finalValidProducts.push(v);
+            }
+          }
+
+          if (finalValidProducts.length >= MAX_PRODUCTS) stopRequested = true;
+        } catch (e) {
+          log(`[smart] BŁĄD linku ${link}: ${e}`);
+        }
+      })();
+
+      backgroundTasks.push(task);
+
+      // Miękki timeout - czekamy 4s, jeśli nie ma wyniku, idziemy do następnego linku
+      const softTimeout = new Promise(resolve => setTimeout(() => resolve("TIMEOUT"), 4000));
+      await Promise.race([task, softTimeout]);
+
+      if (stopRequested) break;
     }
 
-    const deduped = deduplicateProducts(allProducts);
-    log(`[smart] Próba ${attempt}: łącznie ${deduped.length} produktów po dedup`);
-
-    if (deduped.length > 0) {
-      log(`[smart] ✓ Znaleziono produkty → walidacja obrazków...`);
-      const validated = await filterValidProducts(deduped, log);
-      log(`[smart] Po walidacji obrazków: ${validated.length}/${deduped.length}`);
-      if (validated.length > 0) {
-        return { businessType: "product", products: validated.slice(0, MAX_PRODUCTS) };
-      }
-      log(`[smart] Próba ${attempt}: wszystkie obrazki nieprawidłowe, próbuję ponownie`);
+    // 🔥 KLUCZOWA ZMIANA: Zamiast czekać na WSZYSTKO (allSettled), dajemy tylko 2s "bonusowe"
+    // i lecimy do kolejnej próby AI, żeby szukać innych linków.
+    if (finalValidProducts.length < MAX_PRODUCTS) {
+      log(`[smart] Próba ${attempt} nie dała kompletu. Krótkie czekanie na tło (2s) przed kolejnym zapytaniem AI...`);
+      await Promise.race([
+        Promise.allSettled(backgroundTasks),
+        new Promise(resolve => setTimeout(resolve, 2000))
+      ]);
     }
 
-    log(`[smart] Próba ${attempt}: brak produktów, ${attempt < 5 ? "próbuję ponownie" : "koniec"}`);
+    if (finalValidProducts.length >= MAX_PRODUCTS) {
+      log(`[smart] Uzbierano komplet ${MAX_PRODUCTS} produktów.`);
+      return { businessType: "product", products: finalValidProducts.slice(0, MAX_PRODUCTS) };
+    }
   }
 
-  log(`[smart] Brak produktów po wszystkich próbach → service`);
-  return { businessType: "service", products: [] };
+  log(`[smart] Koniec. Produkty: ${finalValidProducts.length}`);
+  return finalValidProducts.length > 0 
+    ? { businessType: "product", products: finalValidProducts } 
+    : { businessType: "service", products: [] };
 }
-
 // ─── extractProducts (LEVEL 4) ────────────────────────────────────────────────
 
 export async function extractProducts(
@@ -520,7 +572,7 @@ export async function extractProducts(
   }
 
   const deduped = deduplicateProducts(allProducts);
-  const validated = await filterValidProducts(deduped, log);
+  const validated = await filterValidProducts(deduped, MAX_PRODUCTS, log);
   log(`[productExtractor] ${validated.length} produktów (po walidacji obrazków: ${deduped.length} → ${validated.length})`);
-  return { businessType: "product", products: validated.slice(0, MAX_PRODUCTS) };
+  return { businessType: "product", products: validated };
 }
