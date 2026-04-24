@@ -327,10 +327,7 @@ export function OfferSection({ analysisId }: Props) {
             <div className="text-center space-y-1">
               <div className="flex items-center justify-center gap-2">
                 <Infinity className="w-5 h-5" style={{ color: "#BBEA00" }} />
-                <h3 className="text-2xl text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
-                  1 190 zł{" "}
-                  <span className="text-base font-normal" style={{ color: "rgba(255,255,255,0.3)" }}>jednorazowo</span>
-                </h3>
+                Odbierz limitowaną ofertę
               </div>
               <p className="text" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "Satoshi, sans-serif" }}>
                 Dostęp na zawsze · Cena wzrośnie po premierze
@@ -340,7 +337,7 @@ export function OfferSection({ analysisId }: Props) {
                 className=" py-3 w-[260px] mx-auto rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-opacity"
                 style={{ background: "#BBEA00", color: "#080808", fontFamily: "Brockmann, sans-serif" }}
               >
-                Chcę kupić za 1 190 zł <ArrowRight className="w-4 h-4" />
+                Chcę kupić w przedsprzedaży <ArrowRight className="w-4 h-4" />
             </a>
           </>
         )}

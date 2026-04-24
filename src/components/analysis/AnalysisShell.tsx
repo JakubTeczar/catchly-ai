@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAnalysisPolling } from "@/hooks/useAnalysisPolling";
 import { SectionWrapper } from "./SectionWrapper";
 import { ScreenshotSection } from "./ScreenshotSection";
@@ -29,18 +30,48 @@ const STEP_NAMES = ["Skanowanie wizualne", "Identyfikacja marki", "Mapowanie str
 
 export function AnalysisShell({ id }: Props) {
   const { state, error } = useAnalysisPolling(id);
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [variant, setVariant] = useState<"A" | "B">("A");
   const [emailUnlocked, setEmailUnlocked] = useState(false);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    const v = getVariant();
+    if (initialized.current) return;
+    initialized.current = true;
+
+    const urlVersion = searchParams.get("version");
+    const urlDataSaved = searchParams.get("ref") === "verified";
+
+    const v: "A" | "B" =
+      urlVersion === "A" || urlVersion === "B" ? urlVersion : getVariant();
     setVariant(v);
+
+    if (urlDataSaved) setEmailUnlocked(true);
+
+    const params = new URLSearchParams(searchParams.toString());
+    let changed = false;
+    if (params.get("version") !== v) {
+      params.set("version", v);
+      changed = true;
+    }
+    if (changed) {
+      router.replace(`?${params.toString()}`, { scroll: false });
+    }
+
     fetch("/api/track-visit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ analysisId: id, variant: v }),
     }).catch(() => {});
-  }, [id]);
+  }, [id, searchParams, router]);
+
+  function handleUnlock() {
+    setEmailUnlocked(true);
+    const params = new URLSearchParams(window.location.search);
+    params.set("ref", "verified");
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }
 
   if (error) {
     return (
@@ -148,7 +179,7 @@ export function AnalysisShell({ id }: Props) {
       {/* ── WARIANT B: email gate przed propozycjami ──────────────────── */}
       {variant === "B" && state.leadToolsDone && (
         !emailUnlocked ? (
-          <EmailGate analysisId={id} variant="B" onUnlock={() => setEmailUnlocked(true)} />
+          <EmailGate analysisId={id} variant="B" onUnlock={handleUnlock} />
         ) : (
           <>
             <SectionWrapper visible={true} ready={true}>

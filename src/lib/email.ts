@@ -6,7 +6,7 @@ const FROM = `Catchly <kontakt@catchly.pl>`;
 
 export async function sendLeadConfirmation(to: string, websiteUrl: string, analysisId: string) {
   const baseUrl = "https://kreator.catchly.pl";
-  const analysisUrl = `${baseUrl}/analiza/${analysisId}`;
+  const analysisUrl = `${baseUrl}/analiza/${analysisId}?ref=verified`;
 
   await resend.emails.send({
     from: FROM,
@@ -62,7 +62,7 @@ export async function sendLeadConfirmation(to: string, websiteUrl: string, analy
 export async function sendAdminLeadNotification(email: string, websiteUrl: string, analysisId: string, variant?: string | null) {
   const admin = "kontakt@catchly.pl";
   const baseUrl = "https://kreator.catchly.pl";
-  const analysisUrl = `${baseUrl}/analiza/${analysisId}`;
+  const analysisUrl = `${baseUrl}/analiza/${analysisId}?ref=verified`;
 
   await resend.emails.send({
     from: FROM,

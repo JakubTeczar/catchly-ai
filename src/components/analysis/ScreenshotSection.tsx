@@ -11,7 +11,7 @@ interface Props {
   url: string;
 }
 
-const PROGRESS_DURATION = 24000; // 10s
+const PROGRESS_DURATION = 30000; // 10s
 
 export function ScreenshotSection({ screenshotUrl, done, allDone, url }: Props) {
   const [progress, setProgress] = useState(0);

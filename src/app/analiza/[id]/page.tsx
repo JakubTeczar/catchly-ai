@@ -3,7 +3,7 @@
 import { AnalysisShell } from "@/components/analysis/AnalysisShell";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, Suspense } from "react";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -97,7 +97,9 @@ export default function AnalysisPage({ params }: Props) {
           </p>
         </div>
 
-        <AnalysisShell id={id} />
+        <Suspense fallback={null}>
+          <AnalysisShell id={id} />
+        </Suspense>
       </div>
     </main>
   );
