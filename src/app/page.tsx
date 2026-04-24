@@ -48,7 +48,7 @@ export default function HomePage() {
               fontFamily: "Satoshi, sans-serif",
             }}
           >
-            ✦ Przedsprzedaż — premiera 1 lipca 2026
+            ✦ Przedsprzedaż — premiera 10 lipca 2026
           </div>
 
           <h1

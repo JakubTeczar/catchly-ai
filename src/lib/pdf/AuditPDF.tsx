@@ -527,7 +527,7 @@ export function AuditPDF({ data }: { data: AuditPDFData }) {
             <Text style={s.coverTitle}>Analiza {domain}</Text>
             <Text style={s.coverUrl}>Wygenerowano: {generatedAt}</Text>
           </View>
-          <Text style={s.coverFooter}>catchly.pl  ·  Przedsprzedaż — premiera 1 lipca 2026</Text>
+          <Text style={s.coverFooter}>catchly.pl  ·  Przedsprzedaż — premiera 10 lipca 2026</Text>
         </View>
       </Page>
 
@@ -839,7 +839,7 @@ export function AuditPDF({ data }: { data: AuditPDFData }) {
 
         <View style={s.ctaBar} wrap={false}>
           <View style={{ flex: 1 }}>
-            <Text style={s.ctaBarBadge}>PRZEDSPRZEDAŻ · PREMIERA 1 LIPCA 2026</Text>
+            <Text style={s.ctaBarBadge}>PRZEDSPRZEDAŻ · PREMIERA 10 LIPCA 2026</Text>
             <Text style={s.ctaBarTitle}>Kup dostęp na całe życie</Text>
             <Text style={s.ctaBarSub}>1 190 zł jednorazowo · bez abonamentu · 74 dni na zwrot</Text>
             <Text style={s.ctaBarSub2}>Cena po premierze: 2 490 zł/rok</Text>

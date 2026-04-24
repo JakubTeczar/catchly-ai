@@ -11,8 +11,8 @@ interface Props {
   websiteUrl: string;
 }
 
-const TARGET_DATE = new Date("2026-05-01T00:00:00.000Z");
-const LAUNCH_DATE = "1 lipca 2026";
+const TARGET_DATE = new Date("2026-05-15T00:00:00.000Z");
+const LAUNCH_DATE = "10 lipca 2026";
 
 function useCountdown() {
   const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });

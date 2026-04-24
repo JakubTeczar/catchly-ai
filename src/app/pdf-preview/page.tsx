@@ -163,7 +163,7 @@ function CoverPage() {
           <div style={{ fontSize: 9, color: "#666" }}>Wygenerowano: {generatedAt}</div>
         </div>
         <div style={{ fontSize: 8, color: "#555" }}>
-          catchly.pl · Przedsprzedaż, premiera 1 lipca 2026
+          catchly.pl · Przedsprzedaż, premiera 10 lipca 2026
         </div>
       </div>
     </A4Page>
@@ -443,7 +443,7 @@ function WhyCatchlyPage() {
         >
           <div>
             <div style={{ fontSize: 7.5, color: C.accent, fontWeight: 700, marginBottom: 5 }}>
-              PRZEDSPRZEDAZ · PREMIERA 1 LIPCA 2026
+              PRZEDSPRZEDAZ · PREMIERA 10 LIPCA 2026
             </div>
             <div style={{ fontSize: 13, fontWeight: 700, color: C.white, marginBottom: 4 }}>
               Kup dostep na cale zycie
