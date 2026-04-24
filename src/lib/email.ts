@@ -1,19 +1,19 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT ?? 465),
-  secure: process.env.SMTP_SECURE !== "false",
+  host: "smtp.catchly.pl",
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: "kontakt@catchly.pl",
+    pass: "ND2ubrWDqBFqDdyNXMkW",
   },
 });
 
-const FROM = `"${process.env.SMTP_FROM_NAME ?? "Catchly"}" <${process.env.SMTP_FROM ?? process.env.SMTP_USER}>`;
+const FROM = `"Catchly" <kontakt@catchly.pl>`;
 
 export async function sendLeadConfirmation(to: string, websiteUrl: string, analysisId: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://kreator.catchly.pl";
+  const baseUrl = "https://kreator.catchly.pl";
   const analysisUrl = `${baseUrl}/analiza/${analysisId}`;
 
   await transporter.sendMail({
@@ -29,14 +29,12 @@ export async function sendLeadConfirmation(to: string, websiteUrl: string, analy
       <td align="center">
         <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;max-width:560px;width:100%">
 
-          <!-- Header -->
           <tr>
             <td style="background:#080808;padding:28px 40px">
               <span style="color:#ffffff;font-size:20px;font-weight:700;letter-spacing:-0.5px">Catchly</span>
             </td>
           </tr>
 
-          <!-- Body -->
           <tr>
             <td style="padding:36px 40px 28px">
               <p style="margin:0 0 8px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px">Audyt gotowy</p>
@@ -53,7 +51,6 @@ export async function sendLeadConfirmation(to: string, websiteUrl: string, analy
             </td>
           </tr>
 
-          <!-- Footer -->
           <tr>
             <td style="padding:20px 40px;border-top:1px solid #eee">
               <p style="margin:0;font-size:12px;color:#aaa">Masz pytania? Odpowiedz na tego maila — odpisujemy w ciągu 24h.</p>
@@ -71,9 +68,8 @@ export async function sendLeadConfirmation(to: string, websiteUrl: string, analy
 }
 
 export async function sendAdminLeadNotification(email: string, websiteUrl: string, analysisId: string, variant?: string | null) {
-  const admin = process.env.SMTP_ADMIN_EMAIL;
-  if (!admin) return;
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "https://kreator.catchly.pl";
+  const admin = "kontakt@catchly.pl";
+  const baseUrl = "https://kreator.catchly.pl";
   const analysisUrl = `${baseUrl}/analiza/${analysisId}`;
 
   await transporter.sendMail({
