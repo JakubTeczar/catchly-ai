@@ -69,7 +69,7 @@ const WHAT_NEXT = [
   },
   {
     label: "Skuteczny Newsletter",
-    desc: "Powiadomienie z ofertą pokzującą relną wartość w zamian za zapis. Buduje bazę i sprzedaje od początku.",
+    desc: "Powiadomienie z ofertą pokazującą realną wartość w zamian za zapis. Buduje bazę i sprzedaje od początku.",
   },
   {
     label: "Oferta ograniczona czasowo",

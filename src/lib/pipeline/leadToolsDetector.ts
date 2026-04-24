@@ -151,6 +151,11 @@ Twoim zadaniem jest wybranie najważniejszych elementów i przedstawienie ich w 
 3. Połącz wszystko w jedną listę.
 4. Wszyskie opisy i teksty muszą być po polsku 
 
+### RESTRYKCYJNA ZASADA UNIKALNOŚCI (KRYTYCZNE):
+W tablicy "finalTools" może wystąpić TYLKO JEDEN obiekt danego typu ('type'). 
+- Jeśli znajdziesz 2 formularze, wybierz ten ważniejszy i stwórz jeden obiekt "contact_form".
+- Niedopuszczalne jest, aby w wynikowym JSONie pole "type" powtórzyło się dwa razy.
+
 LISTA ZNALEZISK:
 ${JSON.stringify(allFound, null, 2)}
 

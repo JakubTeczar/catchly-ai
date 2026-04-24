@@ -81,9 +81,7 @@ export function FeaturesSection({ compact }: Props) {
           <div className="fs-copy">
             <h3 className="fs-feature-title">Zarządzanie przez WhatsApp & Email</h3>
             <p className="fs-feature-desc">
-              Zmienisz promocję w minutę jedną wiadomością. Napisz do agenta na WhatsAppie
-              lub odpowiedz na email, a on zajmie się resztą. Zero paneli, zero logowania,
-              zero stresu.
+                Najważniejsze rzeczy załatwisz w kilka chwil przez WhatsApp lub email. Napisz do agenta albo odpowiedz na wiadomość, a on zajmie się resztą, szybko i bez zbędnych komplikacji.
             </p>
           </div>
         </div>
@@ -91,11 +89,9 @@ export function FeaturesSection({ compact }: Props) {
         {/* ── Feature 3: Radar Konkurencji ──────────────────────────────── */}
         <div className="fs-row">
           <div className="fs-copy">
-            <h3 className="fs-feature-title">Radar Konkurencji & Analityk w jednym</h3>
+            <h3 className="fs-feature-title">Analiza Rynku & Wsparcie Decyzyjne</h3>
             <p className="fs-feature-desc">
-              Catchly śledzi ruchy konkurencji 24/7 i proaktywnie powiadamia Cię,
-              gdy warto reagować. Nie musisz sam monitorować rynku. Agent robi to
-              za Ciebie i podpowiada konkretne kroki.
+              Catchly analizuje zmiany u konkurencji 24/7 i daje Ci znać, kiedy warto zareagować np. obniżyć cenę, uruchomić promocję albo zmienić ofertę. Nie musisz sam sprawdzać rynku. Agent robi to za Ciebie i podpowiada konkretne działania.
             </p>
           </div>
           <div className="fs-visual">

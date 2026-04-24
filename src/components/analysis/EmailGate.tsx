@@ -45,14 +45,16 @@ export function EmailGate({ analysisId, variant, onUnlock }: Props) {
       borderRadius: "16px",
       padding: "2rem",
       display: "flex",
+      alignItems: "center",
       flexDirection: "column",
       gap: "1.25rem",
     }}>
       <div>
         <div style={{
-          display: "inline-flex",
+          display: "block",
           alignItems: "center",
           gap: 8,
+          width: "140px",
           background: "rgba(187,234,0,0.1)",
           border: "1px solid rgba(187,234,0,0.25)",
           borderRadius: "99px",
@@ -61,7 +63,9 @@ export function EmailGate({ analysisId, variant, onUnlock }: Props) {
           fontWeight: 600,
           color: "#BBEA00",
           fontFamily: "Satoshi, sans-serif",
-          marginBottom: "0.85rem",
+          textAlign: "center",
+          margin: "0 auto",
+          marginBottom: "1rem",
         }}>
           ✦ Raport gotowy
         </div>
@@ -70,9 +74,10 @@ export function EmailGate({ analysisId, variant, onUnlock }: Props) {
           fontSize: "1.25rem",
           color: "#fff",
           margin: "0 0 0.5rem",
+          textAlign: "center",
           lineHeight: 1.3,
         }}>
-          Wygenerowaliśmy propozycje popupów dla Twojej strony
+          Wygenerowałem propozycje popupów dla Twojej strony
         </h3>
         <p style={{
           fontFamily: "Satoshi, sans-serif",
@@ -80,12 +85,13 @@ export function EmailGate({ analysisId, variant, onUnlock }: Props) {
           color: "rgba(255,255,255,0.4)",
           margin: 0,
           lineHeight: 1.65,
+          textAlign: "center",
         }}>
           Podaj swój email, żeby zobaczyć 3 gotowe pop-upy dopasowane do Twojej strony oraz możliwość pobrania pełnego raportu PDF.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.6rem", maxWidth: "420px" }}>
+      <form onSubmit={handleSubmit} style={{ display: "flex", width: "100%", flexDirection: "column", gap: "0.6rem", maxWidth: "420px" }}>
         <input
           type="text"
           placeholder="Twoje imię (opcjonalnie)"

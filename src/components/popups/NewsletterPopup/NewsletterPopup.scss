@@ -13,6 +13,7 @@
   transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1.2px solid rgba(0, 0, 0, 0.363);
 
   &.active {
     opacity: 1;

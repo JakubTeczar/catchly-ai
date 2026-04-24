@@ -72,18 +72,14 @@ export function SubpagesSection({ subpagesData, done }: Props) {
       <div className="p-5 space-y-4">
 
         <div className="flex items-center gap-2">
-          <Globe className="w-4 h-4" style={{ color: "#92B2F2" }} />
-          <h2 className="text-base font-medium text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
+          <Globe className="w-4 h-4 " style={{ color: "#92B2F2" }} />
+          <h2 className="text-base p-1 w-[90%] font-medium text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
           {done 
               ? "Sprawdziłem Twoją stronę i mam kilka ważnych informacji"
               : "Sprawdzam Twoje podstrony..."
             }
           </h2>
-          {done && subpagesData && (
-            <span className="ml-auto text-xs" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Satoshi, sans-serif" }}>
-              {subpagesData.length} podstron
-            </span>
-          )}
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

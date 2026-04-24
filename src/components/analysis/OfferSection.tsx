@@ -125,7 +125,7 @@ export function OfferSection({ analysisId }: Props) {
           ✦ Przedsprzedaż — tylko do 1 maja 2026
         </div>
         <h2 className="text-3xl md:text-4xl text-white" style={{ fontFamily: "Brockmann, sans-serif" }}>
-          Kup dożywotnią licencje
+          Kup dożywotnią licencję
         </h2>
         <p className="text-sm" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "Satoshi, sans-serif" }}>
           Nowe podejście AI agent, który uczy się razem z Twoją stroną
@@ -179,7 +179,7 @@ export function OfferSection({ analysisId }: Props) {
             "Na tej podstawie tworzy konkretne rekomendacje dopasowane do Twojej oferty i celów",
             "Sprawdza, co działa na Twoich klientów i z czasem optymalizuje konwersję",
             "Każdą zmianę najpierw widzisz Ty, możesz ją zaakceptować lub odrzucić",
-            "Nie masz przy sobie laptopa? Catchly może kontaktować się z tobą przez whats'appa",
+            "Nie masz przy sobie laptopa? Catchly może kontaktować się z Tobą przez WhatsAppa",
             "Dla lepszych wyników AI uwzględnia też dane z rynku i konkurencji"
             ].map((item, i) => (
               <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
@@ -246,6 +246,12 @@ export function OfferSection({ analysisId }: Props) {
           </svg>
           <span>Twoje dane i ustawienia nigdy nie są zmieniane bez Twojej zgody</span>
         </div>
+          <a href="https://cart.easy.tools/checkout/49757131/przedsprzedaz-catchly" target="_blank"
+                className=" py-3 w-[260px] ml-auto rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-opacity"
+                style={{ background: "#BBEA00", color: "#080808", fontFamily: "Brockmann, sans-serif" }}
+              >
+                Kup w przedsprzedaży <ArrowRight className="w-4 h-4" />
+            </a>
       </div>
 
       {/* Differentiators — animated features section */}
@@ -296,9 +302,9 @@ export function OfferSection({ analysisId }: Props) {
         {/* Guarantee bar */}
         <div className="flex items-center gap-2 pt-1 px-3 py-2 rounded-xl"
           style={{ background: "rgba(187,234,0,0.05)", border: "1px solid rgba(187,234,0,0.12)" }}>
-          <RotateCcw className="w-3.5 h-3.5 shrink-0" style={{ color: "#BBEA00" }} />
-          <span className="text-xs" style={{ color: "rgba(255,255,255,0.45)", fontFamily: "Satoshi, sans-serif" }}>
-            <span style={{ color: "#BBEA00" }}>14 dni na pełny zwrot</span> po premierze
+          <RotateCcw className="w-3.5 h-3.5 ml-1 shrink-0" style={{ color: "#BBEA00" }} />
+          <span className="text-sm pt-1 " style={{ color: "rgba(255,255,255,0.65)", fontFamily: "Satoshi, sans-serif" }}>
+            <span style={{ color: "#BBEA00" }}>14 dni na zwrot</span> po premierze
           </span>
         </div>
       </div>
@@ -326,53 +332,16 @@ export function OfferSection({ analysisId }: Props) {
                   <span className="text-base font-normal" style={{ color: "rgba(255,255,255,0.3)" }}>jednorazowo</span>
                 </h3>
               </div>
-              <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "Satoshi, sans-serif" }}>
+              <p className="text" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "Satoshi, sans-serif" }}>
                 Dostęp na zawsze · Cena wzrośnie po premierze
               </p>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-3 max-w-sm mx-auto">
-              <input
-                type="text"
-                placeholder="Twoje imię (opcjonalnie)"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "white",
-                  fontFamily: "Satoshi, sans-serif",
-                }}
-              />
-              <input
-                type="email"
-                placeholder="Twój adres email *"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-                className="w-full px-4 py-2.5 rounded-xl text-sm outline-none"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "white",
-                  fontFamily: "Satoshi, sans-serif",
-                }}
-              />
-              {error && <p className="text-xs" style={{ color: "#ff6b6b" }}>{error}</p>}
-              <button
-                type="submit"
-                disabled={loading || !email}
-                className="w-full py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-opacity disabled:opacity-50"
+            <a href="https://cart.easy.tools/checkout/49757131/przedsprzedaz-catchly" target="_blank"
+                className=" py-3 w-[260px] mx-auto rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-opacity"
                 style={{ background: "#BBEA00", color: "#080808", fontFamily: "Brockmann, sans-serif" }}
               >
-                {loading ? "Zapisuję..." : (
-                  <>Chcę kupić za 1 190 zł <ArrowRight className="w-4 h-4" /></>
-                )}
-              </button>
-              <p className="text-xs text-center" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Satoshi, sans-serif" }}>
-                74 dni na pełny zwrot · Bez ryzyka
-              </p>
-            </form>
+                Chcę kupić za 1 190 zł <ArrowRight className="w-4 h-4" />
+            </a>
           </>
         )}
       </div>
