@@ -1,18 +1,50 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sendAdminLeadNotification, sendLeadConfirmation } from "@/lib/email";
 
-export async function GET() {
-  const admin = process.env.SMTP_ADMIN_EMAIL;
-  if (!admin) {
-    return NextResponse.json({ error: "Brak SMTP_ADMIN_EMAIL w env" }, { status: 500 });
+export async function POST(req: NextRequest) {
+  const logs: string[] = [];
+  const log = (msg: string) => {
+    console.log("[test-email]", msg);
+    logs.push(`${new Date().toISOString()} ${msg}`);
+  };
+
+  log(`NODE_ENV=${process.env.NODE_ENV}`);
+  log(`SMTP host=smtp.catchly.pl port=587`);
+
+  let body: Record<string, string>;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ ok: false, error: "Nieprawidłowy JSON", logs }, { status: 400 });
+  }
+
+  const { type, to, websiteUrl, analysisId, variant } = body;
+  log(`type=${type} to=${to} websiteUrl=${websiteUrl} analysisId=${analysisId}`);
+
+  if (!to || !websiteUrl || !analysisId) {
+    return NextResponse.json({ ok: false, error: "Brak wymaganych pól: to, websiteUrl, analysisId", logs }, { status: 400 });
   }
 
   try {
-    await sendLeadConfirmation(admin, "https://example.com");
-    await sendAdminLeadNotification(admin, "https://example.com", "test-id-123", "A");
-    return NextResponse.json({ ok: true, sentTo: admin });
+    log("Łączenie z SMTP...");
+    if (type === "lead") {
+      log("Wysyłanie sendLeadConfirmation...");
+      await sendLeadConfirmation(to, websiteUrl, analysisId);
+      log("sendLeadConfirmation OK");
+    } else if (type === "admin") {
+      log("Wysyłanie sendAdminLeadNotification...");
+      await sendAdminLeadNotification(to, websiteUrl, analysisId, variant || null);
+      log("sendAdminLeadNotification OK");
+    } else {
+      return NextResponse.json({ ok: false, error: `Nieznany typ: '${type}'`, logs }, { status: 400 });
+    }
+    log("Gotowe — mail wysłany");
+    return NextResponse.json({ ok: true, logs });
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e);
-    return NextResponse.json({ error: msg }, { status: 500 });
+    const stack = e instanceof Error ? e.stack : undefined;
+    log(`BŁĄD: ${msg}`);
+    if (stack) log(`Stack: ${stack}`);
+    return NextResponse.json({ ok: false, error: msg, stack, logs }, { status: 500 });
   }
 }

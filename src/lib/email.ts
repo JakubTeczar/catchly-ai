@@ -2,8 +2,8 @@ import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.catchly.pl",
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false,
   auth: {
     user: "kontakt@catchly.pl",
     pass: "ND2ubrWDqBFqDdyNXMkW",
