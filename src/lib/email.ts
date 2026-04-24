@@ -1,22 +1,14 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.catchly.pl",
-  port: 587,
-  secure: false,
-  auth: {
-    user: "kontakt@catchly.pl",
-    pass: "ND2ubrWDqBFqDdyNXMkW",
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM = `"Catchly" <kontakt@catchly.pl>`;
+const FROM = `Catchly <kontakt@catchly.pl>`;
 
 export async function sendLeadConfirmation(to: string, websiteUrl: string, analysisId: string) {
   const baseUrl = "https://kreator.catchly.pl";
   const analysisUrl = `${baseUrl}/analiza/${analysisId}`;
 
-  await transporter.sendMail({
+  await resend.emails.send({
     from: FROM,
     to,
     subject: "Twój audyt Catchly jest gotowy",
@@ -72,7 +64,7 @@ export async function sendAdminLeadNotification(email: string, websiteUrl: strin
   const baseUrl = "https://kreator.catchly.pl";
   const analysisUrl = `${baseUrl}/analiza/${analysisId}`;
 
-  await transporter.sendMail({
+  await resend.emails.send({
     from: FROM,
     to: admin,
     subject: `[Catchly] Nowy lead: ${email}`,
