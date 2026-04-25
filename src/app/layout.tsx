@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { ToastProvider } from "@/components/ui/ToastProvider";
+import Script from "next/script";
 import "./globals.css";
 
 const geist = Geist({
