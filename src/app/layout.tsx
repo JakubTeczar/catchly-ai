@@ -25,8 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl" className={`${geist.variable} h-full antialiased`}>
-      <body className="min-h-full bg-zinc-950" suppressHydrationWarning>
-        
+      <head>
         {/* Meta Pixel */}
         <Script id="facebook-pixel" strategy="afterInteractive">
           {`
@@ -38,23 +37,17 @@ export default function RootLayout({
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1503458168239013');
+            fbq('init', '1448259839948871');
             fbq('track', 'PageView');
           `}
         </Script>
-
-        {/* noscript fallback */}
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `
-              <noscript>
-                <img height="1" width="1" style="display:none"
-                src="https://www.facebook.com/tr?id=1503458168239013&ev=PageView&noscript=1"/>
-              </noscript>
-            `,
-          }}
-        />
-
+        <noscript>
+          <img height="1" width="1" style={{display: "none"}}
+            src="https://www.facebook.com/tr?id=1448259839948871&ev=PageView&noscript=1"
+          />
+        </noscript>
+      </head>
+      <body className="min-h-full bg-zinc-950" suppressHydrationWarning>
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
